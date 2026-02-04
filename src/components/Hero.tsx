@@ -136,7 +136,7 @@ const Hero: React.FC = () => {
     <section id="home" className="hero">
       <div className="hero-content">
         <div className="hero-text">
-          <h1>Merhaba, Ben <span className="highlight">{portfolioData.name}</span></h1>
+          <h1>{language === 'en' ? 'Hello, I\'m' : 'Merhaba, Ben'} <span className="highlight">{portfolioData.name}</span></h1>
           <p className="subtitle">{portfolioData.title}</p>
           <div className="social-links">
             <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -160,10 +160,10 @@ const Hero: React.FC = () => {
               <i className="fas fa-robot"></i>
             </div>
             <div className="chat-title">
-              <h3>AI Asistan</h3>
+              <h3>{t('hero.aiAssistant')}</h3>
               <span className="status">
                 <span className="status-dot"></span>
-                Bana soru sorabilirsiniz
+                {t('hero.aiStatus')}
               </span>
             </div>
           </div>
@@ -195,10 +195,10 @@ const Hero: React.FC = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Bir soru sorun..."
+              placeholder={t('hero.inputPlaceholder')}
               autoComplete="off"
             />
-            <button onClick={handleSendMessage} aria-label="Gönder">
+            <button onClick={handleSendMessage} aria-label={language === 'en' ? 'Send' : 'Gönder'}>
               <i className="fas fa-paper-plane"></i>
             </button>
           </div>
@@ -208,7 +208,7 @@ const Hero: React.FC = () => {
               <button
                 key={index}
                 className="suggestion-btn"
-                onClick={() => handleSuggestionClick(suggestion.question)}
+                onClick={() => handleSuggestionClick(suggestion.questionTr, suggestion.questionEn)}
               >
                 {suggestion.text}
               </button>

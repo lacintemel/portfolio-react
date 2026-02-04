@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import '../styles/FeaturedProjects.css';
 
 interface Screenshot {
   src: string;
-  title: string;
-  description: string;
+  titleTr: string;
+  titleEn: string;
+  descriptionTr: string;
+  descriptionEn: string;
 }
 
 interface FeaturedProject {
   name: string;
-  tagline: string;
-  description: string;
-  features: string[];
+  taglineTr: string;
+  taglineEn: string;
+  descriptionTr: string;
+  descriptionEn: string;
+  featuresTr: string[];
+  featuresEn: string[];
   technologies: string[];
   screenshots: Screenshot[];
   comingSoon?: boolean;
@@ -22,9 +28,11 @@ interface FeaturedProject {
 const featuredProjects: FeaturedProject[] = [
   {
     name: "PayMaki",
-    tagline: "Modern İK Yönetim Platformu",
-    description: "Kurumsal İK süreçlerini dijitalleştiren kapsamlı bir web uygulaması. Bordro yönetimi, izin takibi, satış performansı analizi ve çalışan yönetimi tek platformda.",
-    features: [
+    taglineTr: "Modern İK Yönetim Platformu",
+    taglineEn: "Modern HR Management Platform",
+    descriptionTr: "Kurumsal İK süreçlerini dijitalleştiren kapsamlı bir web uygulaması. Bordro yönetimi, izin takibi, satış performansı analizi ve çalışan yönetimi tek platformda.",
+    descriptionEn: "A comprehensive web application that digitizes corporate HR processes. Payroll management, leave tracking, sales performance analysis, and employee management in one platform.",
+    featuresTr: [
       "📊 Bordro & Maaş Yönetimi",
       "🏖️ İzin Takip Sistemi",
       "📈 Satış Performans Analizi",
@@ -32,12 +40,20 @@ const featuredProjects: FeaturedProject[] = [
       "👥 Çalışan Yönetimi",
       "📄 Excel/PDF Export"
     ],
+    featuresEn: [
+      "📊 Payroll & Salary Management",
+      "🏖️ Leave Tracking System",
+      "📈 Sales Performance Analysis",
+      "⏰ Time & Attendance Tracking",
+      "👥 Employee Management",
+      "📄 Excel/PDF Export"
+    ],
     technologies: ["React", "Vite", "TailwindCSS", "Supabase", "PostgreSQL"],
     screenshots: [
-      { src: "/images/PayMaki4.png", title: "Genel Bakış", description: "Ana dashboard ve finansal özet" },
-      { src: "/images/PayMaki3.png", title: "Çalışanlar", description: "Personel yönetimi ve organizasyon" },
-      { src: "/images/PayMaki2.png", title: "Zaman Takibi", description: "Mesai ve giriş-çıkış takibi" },
-      { src: "/images/PayMaki1.png", title: "Performans", description: "Haftalık verimlilik analizi" }
+      { src: "/images/PayMaki4.png", titleTr: "Genel Bakış", titleEn: "Dashboard", descriptionTr: "Ana dashboard ve finansal özet", descriptionEn: "Main dashboard and financial overview" },
+      { src: "/images/PayMaki3.png", titleTr: "Çalışanlar", titleEn: "Employees", descriptionTr: "Personel yönetimi ve organizasyon", descriptionEn: "Personnel management and organization" },
+      { src: "/images/PayMaki2.png", titleTr: "Zaman Takibi", titleEn: "Time Tracking", descriptionTr: "Mesai ve giriş-çıkış takibi", descriptionEn: "Shift and check-in/out tracking" },
+      { src: "/images/PayMaki1.png", titleTr: "Performans", titleEn: "Performance", descriptionTr: "Haftalık verimlilik analizi", descriptionEn: "Weekly productivity analysis" }
     ],
     comingSoon: true,
     github: "https://github.com/lacintemel/PayMaki"
@@ -45,6 +61,7 @@ const featuredProjects: FeaturedProject[] = [
 ];
 
 const FeaturedProjects: React.FC = () => {
+  const { language, t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<Screenshot | null>(null);
 
   const openLightbox = (screenshot: Screenshot) => {
@@ -62,15 +79,16 @@ const FeaturedProjects: React.FC = () => {
       <div className="container">
         <h2 className="section-title">
           <span className="star-icon">⭐</span>
-          Öne Çıkan Projeler
+          {t('featured.title')}
         </h2>
+        <p className="section-subtitle">{t('featured.subtitle')}</p>
         
         <div className="featured-grid">
           {featuredProjects.map((project, index) => (
             <div className="featured-card" key={index}>
               {project.comingSoon && (
                 <div className="coming-soon-badge">
-                  <span>🚀 Yakında</span>
+                  <span>{t('featured.comingSoon')}</span>
                 </div>
               )}
               
@@ -84,12 +102,12 @@ const FeaturedProjects: React.FC = () => {
                     >
                       <img 
                         src={screenshot.src} 
-                        alt={screenshot.title}
+                        alt={language === 'en' ? screenshot.titleEn : screenshot.titleTr}
                         loading="lazy"
                       />
                       <div className="screenshot-overlay">
                         <i className="fas fa-search-plus"></i>
-                        <span>{screenshot.title}</span>
+                        <span>{language === 'en' ? screenshot.titleEn : screenshot.titleTr}</span>
                       </div>
                     </div>
                   ))}
@@ -99,13 +117,13 @@ const FeaturedProjects: React.FC = () => {
               <div className="featured-content">
                 <div className="featured-header">
                   <h3>{project.name}</h3>
-                  <span className="tagline">{project.tagline}</span>
+                  <span className="tagline">{language === 'en' ? project.taglineEn : project.taglineTr}</span>
                 </div>
                 
-                <p className="featured-description">{project.description}</p>
+                <p className="featured-description">{language === 'en' ? project.descriptionEn : project.descriptionTr}</p>
                 
                 <div className="features-grid">
-                  {project.features.map((feature, fIndex) => (
+                  {(language === 'en' ? project.featuresEn : project.featuresTr).map((feature, fIndex) => (
                     <div className="feature-item" key={fIndex}>
                       {feature}
                     </div>
@@ -138,13 +156,13 @@ const FeaturedProjects: React.FC = () => {
                       className="action-btn live-btn"
                     >
                       <i className="fas fa-external-link-alt"></i>
-                      Canlı Demo
+                      {t('featured.liveDemo')}
                     </a>
                   )}
                   {project.comingSoon && !project.liveUrl && (
                     <span className="action-btn coming-btn disabled">
                       <i className="fas fa-clock"></i>
-                      Demo Yakında
+                      {t('featured.demoSoon')}
                     </span>
                   )}
                 </div>
@@ -161,10 +179,10 @@ const FeaturedProjects: React.FC = () => {
             <button className="lightbox-close" onClick={closeLightbox}>
               <i className="fas fa-times"></i>
             </button>
-            <img src={selectedImage.src} alt={selectedImage.title} />
+            <img src={selectedImage.src} alt={language === 'en' ? selectedImage.titleEn : selectedImage.titleTr} />
             <div className="lightbox-caption">
-              <h4>{selectedImage.title}</h4>
-              <p>{selectedImage.description}</p>
+              <h4>{language === 'en' ? selectedImage.titleEn : selectedImage.titleTr}</h4>
+              <p>{language === 'en' ? selectedImage.descriptionEn : selectedImage.descriptionTr}</p>
             </div>
           </div>
         </div>

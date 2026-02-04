@@ -690,8 +690,17 @@ Bu sorulardan birini deneyebilirsiniz!`,
   }
 };
 
-export function getAIResponse(question: string): AIResponse {
+export function getAIResponse(question: string, language: 'tr' | 'en' = 'tr'): AIResponse {
   const category = detectCategory(question);
+  
+  if (language === 'en') {
+    const responseFunction = responsesEN[category] || responsesEN.unknown;
+    return {
+      text: responseFunction(),
+      confidence: category === 'unknown' ? 0.3 : 0.9
+    };
+  }
+  
   const responseFunction = responses[category] || responses.unknown;
   
   return {
@@ -699,6 +708,266 @@ export function getAIResponse(question: string): AIResponse {
     confidence: category === 'unknown' ? 0.3 : 0.9
   };
 }
+
+// English responses
+const responsesEN: Record<string, () => string> = {
+  greeting: () => {
+    const greetings = [
+      `Hello! 👋 I'm Laçin's AI assistant. I can tell you anything about ${portfolioData.firstName}!\n\nYou can ask about his projects, skills, contact info, or experience.`,
+      `Hi there! 🙌 I'm Laçin Temel's portfolio assistant. How can I help you?\n\nFeel free to ask about projects, technical skills, or contact information!`,
+      `Welcome! 😊 I'm Laçin's digital assistant. I'm here to answer your questions about him.`
+    ];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  },
+
+  who: () => `**${portfolioData.name}** 👨‍💻
+
+Hello, I'm Laçin Temel. I'm a Computer Engineering student specializing in cybersecurity and software development. I have practical experience in penetration testing, vulnerability analysis, and bug bounty programs. Previously, I worked as a Cyber Security Analyst at Vulnerday, performing security tests on both internal and client systems.
+
+📊 **Statistics:**
+• ${portfolioData.stats.contributions} GitHub contributions
+• ${portfolioData.stats.projects} projects
+• ${portfolioData.stats.technologies} different technologies
+
+📍 Location: ${portfolioData.location}
+📧 Email: ${portfolioData.email}
+📱 Phone: ${portfolioData.phone}`,
+
+  projects: () => {
+    const projectList = portfolioData.projects.map(p => 
+      `• **${p.name}**: ${p.description}`
+    ).join('\n');
+    
+    return `${portfolioData.firstName}'s featured projects 🚀
+
+${projectList}
+
+Ask about any project by name for more details!`;
+  },
+
+  security: () => `${portfolioData.firstName} and Cyber Security 🔐
+
+Laçin works as a **Cyber Security Analyst** and **Red Teamer**!
+
+**💼 Experience:**
+• Cyber Security Analyst at Vulnerday (2023-2024)
+• Penetration testing and vulnerability assessments
+• Bug Bounty program participation
+
+**🔒 Security Skills:**
+${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
+
+**🎯 Areas of Expertise:**
+• Offensive Security (Penetration Testing)
+• Defensive Security (SOC, SIEM)
+• Web Application Security
+• Network Security & Threat Intelligence
+• AI Security & Adversarial ML
+
+**📜 Certifications:**
+${portfolioData.certifications.map(c => `• ${c}`).join('\n')}
+
+He actively works on both offensive and defensive security! 🛡️`,
+
+  skills: () => `${portfolioData.firstName}'s Technical Skills 🛠️
+
+💻 **Programming Languages:**
+${portfolioData.skills.languages.join(", ")}
+
+🔐 **Cyber Security:**
+${portfolioData.skills.security.join(", ")}
+
+🤖 **AI & Machine Learning:**
+${portfolioData.skills.ai.join(", ")}
+
+⚙️ **Backend:**
+${portfolioData.skills.backend.join(", ")}
+
+🎨 **Frontend:**
+${portfolioData.skills.frontend.join(", ")}
+
+🔧 **Tools:**
+${portfolioData.skills.tools.join(", ")}
+
+🌍 **Spoken Languages:**
+${portfolioData.spokenLanguages.join(", ")}`,
+
+  ai: () => `${portfolioData.firstName} and Artificial Intelligence 🤖
+
+AI is one of ${portfolioData.firstName}'s most passionate areas!
+
+**🧠 AI & ML Skills:**
+${portfolioData.skills.ai.map(skill => `• ${skill}`).join('\n')}
+
+**🚀 AI Projects:**
+• **InterviewAI** - AI-powered interview simulation (OpenAI GPT-4)
+• **YouTube AI Assistant** - Video content analysis and summarization
+• **Portfolio AI Assistant** - The assistant you're talking to right now!
+
+**💡 AI Applications:**
+• Natural Language Processing (NLP)
+• Prompt Engineering & Optimization
+• LLM integration and fine-tuning
+• AI security and adversarial attacks
+
+He loves using AI to solve real-world problems and continuously improves himself in this field! 🌟`,
+
+  contact: () => `Contact ${portfolioData.firstName} 📬
+
+📧 **Email:** ${portfolioData.email}
+📱 **Phone:** ${portfolioData.phone}
+
+🔗 **Social Media:**
+• GitHub: ${portfolioData.github}
+• LinkedIn: ${portfolioData.linkedin}
+
+Don't hesitate to reach out for collaboration, project proposals, or just to say hello!
+
+Usually responds within 24 hours. 📩`,
+
+  experience: () => {
+    const exp = portfolioData.experiences[0];
+    return `${portfolioData.firstName}'s Work Experience 💼
+
+**${exp.title}**
+📍 ${exp.company} | ${exp.location}
+📅 ${exp.period}
+
+**Responsibilities:**
+${exp.description.map(d => `• ${d}`).join('\n')}
+
+He has hands-on experience in security analysis and penetration testing!`;
+  },
+
+  education: () => {
+    const edu = portfolioData.educations[0];
+    return `${portfolioData.firstName}'s Education 🎓
+
+**${edu.degree}**
+🏫 ${edu.school}
+📍 ${edu.location}
+📅 ${edu.period}
+
+Currently studying Computer Engineering, with a focus on cybersecurity and software development.`;
+  },
+
+  languages: () => `Languages ${portfolioData.firstName} Speaks 🌍
+
+${portfolioData.spokenLanguages.map(lang => `• ${lang}`).join('\n')}
+
+This multilingual ability provides advantages in both local and international projects! 🗣️`,
+
+  thanks: () => {
+    const responses = [
+      `You're welcome! 😊 If you have any other questions, I'd be happy to help.`,
+      `My pleasure! 🙌 Feel free to ask if you need anything else.`,
+      `You're welcome! To contact ${portfolioData.firstName}: ${portfolioData.email} 📧`
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  },
+
+  location: () => `${portfolioData.firstName}'s Location 📍
+
+🏠 Currently living in: **${portfolioData.location}**
+
+Open to remote work and willing to travel for suitable opportunities! 🌍`,
+
+  help: () => `AI Assistant User Guide 🤖
+
+You can ask me about the following topics:
+
+**👤 Personal Info:**
+• Who is Laçin?
+• Where does he live?
+• What's his motivation?
+
+**🔐 Cyber Security:**
+• What are his security skills?
+• Penetration testing experience
+• What certifications does he have?
+
+**🤖 Artificial Intelligence:**
+• What are his AI skills?
+• What AI projects does he have?
+• About prompt engineering
+
+**💻 Technical Skills:**
+• What technologies does he know?
+• About Python/JavaScript/Java
+• DevOps skills
+
+**🚀 Projects:**
+• What are his projects?
+• InterviewAI, PayMaki, MSRS...
+• About ThatTicket.com
+
+**📞 Contact:**
+• Email, phone, LinkedIn, GitHub
+
+💡 **Tip:** Want something fun? Say "tell me a joke"! 😄`,
+
+  fun: () => {
+    const jokes = [
+      `Haha! A cyber security joke? 😄
+
+🔐 **Why don't hackers throw parties?**
+Because they crash everyone's network! 
+
+😅 Jokes aside, ${portfolioData.firstName} takes his work seriously but enjoys it!`,
+      
+      `Here for a smile! 😊
+
+💡 **The difference between a developer and a security specialist:**
+Developer: "It works!"
+Security: "But is it secure?" 🤔
+
+${portfolioData.firstName} understands both perspectives!`,
+
+      `A bit of fun! 🎉
+
+💻 **99 little bugs in the code,**
+**99 little bugs...**
+**Take one down, patch it around,**
+**127 little bugs in the code!**
+
+Every developer's daily life, right? 😅`
+    ];
+    return jokes[Math.floor(Math.random() * jokes.length)];
+  },
+
+  unknown: () => {
+    const responses = [
+      `Let me try to help you with that! 🤔
+
+You can ask about ${portfolioData.firstName}:
+• Projects and skills
+• Contact info (email, phone)
+• Technical skills
+• Experience
+
+Try asking in a different way!`,
+      
+      `Hmm, I didn't quite understand. 🧐
+
+I can help you with:
+• "Who is ${portfolioData.firstName}?"
+• "What technologies does he know?"
+• "What are his contact details?"
+• "What are his projects?"
+
+You can try one of these questions!`,
+
+      `Could you try asking that differently? 😊
+
+**Suggested questions:**
+• What are Laçin's skills?
+• How can I contact him?
+• What projects does he have?
+• What's his email address?`
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
+};
 
 export function formatMessage(text: string): string {
   return text

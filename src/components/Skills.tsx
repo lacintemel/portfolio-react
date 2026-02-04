@@ -1,41 +1,44 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 import '../styles/Skills.css';
 
 const Skills: React.FC = () => {
+  const { language, t } = useLanguage();
+
   const skillCategories = [
     {
-      title: 'Programlama Dilleri',
+      title: t('skills.languages'),
       icon: 'fa-code',
       skills: portfolioData.skills.languages
     },
     {
-      title: 'Siber Güvenlik',
+      title: t('skills.security'),
       icon: 'fa-shield-alt',
       skills: portfolioData.skills.security
     },
     {
-      title: 'Yapay Zeka & ML',
+      title: t('skills.ai'),
       icon: 'fa-brain',
       skills: portfolioData.skills.ai
     },
     {
-      title: 'Backend',
+      title: t('skills.backend'),
       icon: 'fa-server',
       skills: portfolioData.skills.backend
     },
     {
-      title: 'Frontend',
+      title: t('skills.frontend'),
       icon: 'fa-laptop-code',
       skills: portfolioData.skills.frontend
     },
     {
-      title: 'Araçlar',
+      title: t('skills.tools'),
       icon: 'fa-tools',
       skills: portfolioData.skills.tools
     },
     {
-      title: 'Konuştuğum Diller',
+      title: language === 'en' ? 'Spoken Languages' : 'Konuştuğum Diller',
       icon: 'fa-language',
       skills: portfolioData.spokenLanguages
     }
@@ -44,7 +47,7 @@ const Skills: React.FC = () => {
   return (
     <section id="skills" className="skills">
       <div className="container">
-        <h2 className="section-title">Yeteneklerim</h2>
+        <h2 className="section-title">{t('skills.title')}</h2>
         <div className="skills-grid">
           {skillCategories.map((category, index) => (
             <div className="skill-category" key={index}>

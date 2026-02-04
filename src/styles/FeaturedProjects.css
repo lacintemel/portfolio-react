@@ -1,6 +1,6 @@
 .featured-projects {
   padding: 100px 0;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #0a1a1a 50%, #0f2922 100%);
   position: relative;
   overflow: hidden;
 }
@@ -13,8 +13,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
+    radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(52, 211, 153, 0.1) 0%, transparent 40%);
   pointer-events: none;
 }
 
@@ -52,14 +52,14 @@
 }
 
 .featured-card {
-  background: linear-gradient(145deg, rgba(30, 30, 50, 0.9), rgba(20, 20, 35, 0.95));
+  background: linear-gradient(145deg, rgba(20, 40, 35, 0.9), rgba(15, 30, 25, 0.95));
   border-radius: 24px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(139, 92, 246, 0.1);
+    0 0 0 1px rgba(16, 185, 129, 0.1);
   position: relative;
   transition: all 0.4s ease;
 }
@@ -68,8 +68,8 @@
   transform: translateY(-5px);
   box-shadow: 
     0 30px 60px -15px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(139, 92, 246, 0.3),
-    0 0 40px rgba(139, 92, 246, 0.1);
+    0 0 0 1px rgba(16, 185, 129, 0.3),
+    0 0 40px rgba(16, 185, 129, 0.1);
 }
 
 .coming-soon-badge {
@@ -80,7 +80,7 @@
 }
 
 .coming-soon-badge span {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
   color: white;
   padding: 8px 20px;
   border-radius: 50px;
@@ -89,20 +89,20 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
   animation: badgePulse 2s ease-in-out infinite;
 }
 
 @keyframes badgePulse {
-  0%, 100% { box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); }
-  50% { box-shadow: 0 4px 25px rgba(139, 92, 246, 0.6); }
+  0%, 100% { box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 4px 25px rgba(16, 185, 129, 0.6); }
 }
 
 /* Screenshots Collage */
 .featured-screenshots {
   position: relative;
   min-height: 420px;
-  background: linear-gradient(135deg, #1e1e3f 0%, #0f0f23 100%);
+  background: linear-gradient(135deg, #0f2922 0%, #0a1a15 100%);
   padding: 15px;
   overflow: hidden;
 }

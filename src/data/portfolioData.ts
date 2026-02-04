@@ -61,7 +61,7 @@ export interface PortfolioData {
 export const portfolioData: PortfolioData = {
   name: "Laçin Temel",
   firstName: "Laçin",
-  title: "Cyber Security Analyst | Software Developer",
+  title: "Cyber-Network-AI Security | Software Developer",
   bio: "Siber güvenlik alanında kariyer yapmaya tutkuyla bağlı bir profesyonelim. Hızlı öğrenen, takım odaklı ve işbirlikçi bir yaklaşıma sahibim.",
   longBio: `Merhaba, ben Laçin Temel. Siber güvenlik ve yazılım geliştirme alanlarında uzmanlaşmaya odaklanan bir Bilgisayar Mühendisliği öğrencisiyim. Özellikle penetrasyon testleri, güvenlik açığı analizleri ve bug bounty programları konusunda pratik deneyime sahibim. Daha önce Vulnerday’de Cyber Security Analyst olarak görev alarak hem iç sistemler hem de müşteri sistemleri üzerinde güvenlik testleri gerçekleştirdim.
 Siber güvenliğin yanı sıra Full Stack yazılım geliştirme alanında da aktif olarak projeler üretiyorum. Python, JavaScript, TypeScript, Java ve C# başta olmak üzere modern teknolojilerle ölçeklenebilir ve sürdürülebilir uygulamalar geliştirdim. Fintech, yapay zekâ destekli uygulamalar, biletleme ve belediye hizmet sistemleri gibi farklı alanlarda projeler üzerinde çalıştım.
@@ -174,9 +174,9 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
   ],
   
   stats: {
-    projects: "5+",
-    contributions: "285+",
-    technologies: "10+"
+    projects: "10+",
+    contributions: "1000+",
+    technologies: "20+"
   },
   
   interests: ["Siber Güvenlik", "Penetrasyon Testi", "Web Geliştirme", "Bug Bounty", "Network Security"]

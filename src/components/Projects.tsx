@@ -1,5 +1,6 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 import '../styles/Projects.css';
 
 const iconMap: Record<string, string> = {
@@ -12,11 +13,22 @@ const iconMap: Record<string, string> = {
   'users': 'fa-users'
 };
 
+// English project descriptions
+const projectDescriptionsEN: Record<string, string> = {
+  'InterviewAI': 'NLP-based intelligent interview simulation app',
+  'PayMaki': 'Modern Human Resources Management System',
+  'ThatTicket.com': 'Java Swing ticket reservation system',
+  'MSRS - Municipal Service Request System': 'Municipal service request system',
+  'Gayrimenkul Merkezim': 'Management portal for apartment residents'
+};
+
 const Projects: React.FC = () => {
+  const { language, t } = useLanguage();
+
   return (
     <section id="projects" className="projects">
       <div className="container">
-        <h2 className="section-title">Projelerim</h2>
+        <h2 className="section-title">{t('projects.title')}</h2>
         <div className="projects-grid">
           {portfolioData.projects.map((project, index) => (
             <div className="project-card" key={index}>
@@ -50,7 +62,7 @@ const Projects: React.FC = () => {
               </div>
               <div className="project-info">
                 <h3>{project.name}</h3>
-                <p>{project.description}</p>
+                <p>{language === 'en' ? (projectDescriptionsEN[project.name] || project.description) : project.description}</p>
                 <div className="project-tags">
                   {project.technologies.map((tech, techIndex) => (
                     <span className="tag" key={techIndex}>{tech}</span>
