@@ -8,7 +8,8 @@ const iconMap: Record<string, string> = {
   'city': 'fa-city',
   'ticket': 'fa-ticket-alt',
   'credit-card': 'fa-credit-card',
-  'home': 'fa-home'
+  'home': 'fa-home',
+  'users': 'fa-users'
 };
 
 const Projects: React.FC = () => {
@@ -30,7 +31,20 @@ const Projects: React.FC = () => {
                     <i className="fab fa-github"></i>
                   </a>
                 </div>
-                <div className="project-icon">
+                {project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.name}
+                    className="project-logo"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const icon = target.parentElement?.querySelector('.project-icon') as HTMLElement;
+                      if (icon) icon.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div className="project-icon" style={{ display: project.image ? 'none' : 'flex' }}>
                   <i className={`fas ${iconMap[project.icon] || 'fa-code'}`}></i>
                 </div>
               </div>

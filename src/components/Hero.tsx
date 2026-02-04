@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { getAIResponse, formatMessage } from '../utils/aiService';
 import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 import '../styles/Hero.css';
 
 interface Message {
@@ -10,10 +11,19 @@ interface Message {
 }
 
 const Hero: React.FC = () => {
+  const { language, t } = useLanguage();
+  
+  const getWelcomeMessage = () => {
+    if (language === 'en') {
+      return `Hello! 👋 I'm ${portfolioData.firstName}'s AI assistant. You can ask me anything about ${portfolioData.firstName}: experience, projects, skills, contact info and more!`;
+    }
+    return `Merhaba! 👋 Ben ${portfolioData.firstName}'in AI asistanıyım. Bana ${portfolioData.firstName} hakkında her şeyi sorabilirsiniz: deneyimleri, projeleri, yetenekleri, iletişim bilgileri ve daha fazlası!`;
+  };
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      content: `Merhaba! 👋 Ben ${portfolioData.firstName}'in AI asistanıyım. Bana ${portfolioData.firstName} hakkında her şeyi sorabilirsiniz: deneyimleri, projeleri, yetenekleri, iletişim bilgileri ve daha fazlası!`,
+      content: getWelcomeMessage(),
       isUser: false
     }
   ]);
@@ -21,6 +31,15 @@ const Hero: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Reset messages when language changes
+  useEffect(() => {
+    setMessages([{
+      id: 1,
+      content: getWelcomeMessage(),
+      isUser: false
+    }]);
+  }, [language]);
 
   // Only scroll within chat container, not the whole page
   const scrollToBottom = () => {
@@ -69,7 +88,8 @@ const Hero: React.FC = () => {
     }
   };
 
-  const handleSuggestionClick = (question: string) => {
+  const handleSuggestionClick = (questionTr: string, questionEn: string) => {
+    const question = language === 'en' ? questionEn : questionTr;
     const userMessage: Message = {
       id: Date.now(),
       content: question,
@@ -81,7 +101,7 @@ const Hero: React.FC = () => {
 
     setTimeout(async () => {
       await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
-      const response = getAIResponse(question);
+      const response = getAIResponse(question, language);
       const botMessage: Message = {
         id: Date.now() + 1,
         content: response.text,
@@ -92,11 +112,24 @@ const Hero: React.FC = () => {
     }, 100);
   };
 
-  const suggestions = [
-    { text: "Laçin kimdir?", question: "Laçin kimdir?" },
-    { text: "Deneyimleri", question: "İş deneyimi nedir?" },
-    { text: "Projeleri", question: "Projeleri nelerdir?" },
-    { text: "İletişim", question: "İletişim bilgileri nedir?" }
+  const suggestions = language === 'en' ? [
+    { text: "🧑‍💻 Who is Laçin?", questionTr: "Laçin kimdir?", questionEn: "Who is Laçin?" },
+    { text: "🔐 Cyber Security", questionTr: "Siber güvenlik alanında ne yapıyor?", questionEn: "What does he do in cyber security?" },
+    { text: "🚀 Projects", questionTr: "Projeleri nelerdir?", questionEn: "What are his projects?" },
+    { text: "🤖 AI Skills", questionTr: "Yapay zeka ve AI yetenekleri nelerdir?", questionEn: "What are his AI skills?" },
+    { text: "💼 Experience", questionTr: "İş deneyimi nedir?", questionEn: "What is his work experience?" },
+    { text: "📫 Contact", questionTr: "İletişim bilgileri nedir?", questionEn: "What are his contact details?" },
+    { text: "🎓 Education", questionTr: "Eğitim geçmişi nedir?", questionEn: "What is his education background?" },
+    { text: "🌍 Languages", questionTr: "Hangi dilleri konuşuyor?", questionEn: "What languages does he speak?" }
+  ] : [
+    { text: "🧑‍💻 Laçin kimdir?", questionTr: "Laçin kimdir?", questionEn: "Who is Laçin?" },
+    { text: "🔐 Siber Güvenlik", questionTr: "Siber güvenlik alanında ne yapıyor?", questionEn: "What does he do in cyber security?" },
+    { text: "🚀 Projeleri", questionTr: "Projeleri nelerdir?", questionEn: "What are his projects?" },
+    { text: "🤖 AI Yetenekleri", questionTr: "Yapay zeka ve AI yetenekleri nelerdir?", questionEn: "What are his AI skills?" },
+    { text: "💼 Deneyim", questionTr: "İş deneyimi nedir?", questionEn: "What is his work experience?" },
+    { text: "📫 İletişim", questionTr: "İletişim bilgileri nedir?", questionEn: "What are his contact details?" },
+    { text: "🎓 Eğitim", questionTr: "Eğitim geçmişi nedir?", questionEn: "What is his education background?" },
+    { text: "🌍 Diller", questionTr: "Hangi dilleri konuşuyor?", questionEn: "What languages does he speak?" }
   ];
 
   return (

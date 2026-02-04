@@ -93,6 +93,24 @@
   transition: all var(--transition-medium);
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-logo {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+  transition: all var(--transition-medium);
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.project-card:hover .project-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 8px 20px rgba(99, 102, 241, 0.4));
 }
 
 .project-card:hover .project-icon {

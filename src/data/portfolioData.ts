@@ -5,6 +5,7 @@ export interface Project {
   technologies: string[];
   github: string;
   icon: string;
+  image?: string;
 }
 
 export interface Experience {
@@ -131,7 +132,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "InterviewAI, doğal dil işleme (NLP) ve makine öğrenmesi teknolojileri kullanarak mülakat pratiği yapmanıza olanak tanıyan masaüstü uygulamasıdır. Sentence Transformers ile semantik analiz, duygu analizi, anahtar kelime çıkarımı ve yanıt puanlama özellikleri sunar. CustomTkinter ile modern bir arayüze sahiptir.",
       technologies: ["Python", "CustomTkinter", "Sentence Transformers", "KeyBERT", "NLP"],
       github: "https://github.com/lacintemel/InterviewAI",
-      icon: "brain"
+      icon: "brain",
+      image: "/images/InterviewAi.png"
     },
     {
       name: "PayMaki",
@@ -139,7 +141,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "PayMaki, kurumsal İK süreçlerini dijitalleştiren kapsamlı bir web uygulamasıdır. Bordro yönetimi, izin takibi, satış performansı, zaman takibi, işe alım süreci ve çalışan yönetimi gibi modüller içerir. Supabase backend, Excel/PDF export ve rol tabanlı erişim kontrolü sunar.",
       technologies: ["React", "Vite", "TailwindCSS", "Supabase", "PostgreSQL"],
       github: "https://github.com/lacintemel/PayMaki",
-      icon: "users"
+      icon: "users",
+      image: "/images/logo_PayMaki.png"
     },
     {
       name: "ThatTicket.com",
@@ -147,7 +150,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "ThatTicket.com, otobüs ve uçak seferleri için bilet rezervasyonu yapılabilen Java Swing tabanlı masaüstü uygulamasıdır. Observer, Command ve Factory design pattern'leri kullanılmıştır. SQLite veritabanı, müşteri bildirimleri ve admin panel özellikleri sunar.",
       technologies: ["Java", "Swing", "SQLite", "Maven", "Design Patterns"],
       github: "https://github.com/lacintemel/ThatTicket.com",
-      icon: "ticket"
+      icon: "ticket",
+      image: "/images/ThatTicketcom.png"
     },
     {
       name: "MSRS - Municipal Service Request System",
@@ -155,7 +159,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "MSRS, vatandaşların belediye hizmetleri için talep oluşturmasını, takip etmesini ve güncellemeler almasını sağlayan full-stack bir uygulamadır. Harita entegrasyonu, gerçek zamanlı bildirimler (Socket.io), dosya yükleme, admin dashboard ve KVKK uyumlu kayıt sistemi sunar.",
       technologies: ["TypeScript", "React", "Node.js", "MongoDB", "Socket.io"],
       github: "https://github.com/lacintemel/munucipality",
-      icon: "city"
+      icon: "city",
+      image: "/images/Munucipality.png"
     },
     {
       name: "Gayrimenkul Merkezim",
@@ -163,7 +168,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "Gayrimenkul Merkezim (Resident Center), apartman sakinlerinin bakım talepleri oluşturmasına, ödemelerini takip etmesine, duyuruları görmesine ve yönetimle iletişim kurmasına olanak tanıyan modern bir web uygulamasıdır. Dashboard, mesajlaşma, doküman yönetimi ve profil ayarları modülleri içerir.",
       technologies: ["React", "Vite", "TailwindCSS", "Lucide Icons"],
       github: "https://github.com/lacintemel/Gayrimenkul_Merkezim",
-      icon: "home"
+      icon: "home",
+      image: "/images/GayrimenkulMerkezim.png"
     }
   ],
   
