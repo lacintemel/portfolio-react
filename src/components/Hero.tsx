@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
     // Simulate AI thinking
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
 
-    const response = getAIResponse(currentInput);
+    const response = getAIResponse(currentInput, language);
     
     const botMessage: Message = {
       id: Date.now() + 1,

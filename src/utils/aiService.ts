@@ -16,18 +16,18 @@ const keywordMatches: KeywordMatch[] = [
   { keywords: /merhaba|selam|hey|hi|hello|naber|nasılsın|günaydın|iyi günler|iyi akşamlar/i, weight: 1, category: 'greeting' },
   { keywords: /la[cç]in kim|kimdir|kendini tanıt|hakkında|kim bu|sen kimsin|kimsin|tanı|özet|genel/i, weight: 1, category: 'who' },
   { keywords: /proje|projeler|yaptığı|geliştirdiği|çalışma|portfolio|portföy|ne yaptı|neler yaptı|ürün/i, weight: 1, category: 'projects' },
-  { keywords: /interviewai|interview ai|mülakat|iş görüşmesi/i, weight: 1, category: 'interviewai' },
-  { keywords: /msrs|municipality|belediye|şehir|yerel yönetim|talep|municipal/i, weight: 1, category: 'municipality' },
-  { keywords: /thatticket|bilet|etkinlik|konser|sinema/i, weight: 1, category: 'ticket' },
-  { keywords: /paymaki|ödeme|fintech|para|transfer/i, weight: 1, category: 'paymaki' },
-  { keywords: /gayrimenkul|emlak|ev|konut|arsa|daire/i, weight: 1, category: 'realestate' },
-  { keywords: /siber|güvenlik|security|pentest|penetrasyon|red.?team|hacker|hacking|vulnerability|zafiyet|bug.?bounty|capt|sızma/i, weight: 2, category: 'security' },
+  { keywords: /interviewai|interview ai|mülakat|iş görüşmesi/i, weight: 2, category: 'interviewai' },
+  { keywords: /msrs|municipality|belediye|şehir|yerel yönetim|talep|municipal/i, weight: 2, category: 'municipality' },
+  { keywords: /thatticket|bilet|etkinlik|konser|sinema/i, weight: 2, category: 'ticket' },
+  { keywords: /paymaki|ödeme|fintech|para|transfer/i, weight: 2, category: 'paymaki' },
+  { keywords: /gayrimenkul|emlak|ev|konut|arsa|daire/i, weight: 2, category: 'realestate' },
+  { keywords: /siber|güvenlik|security|pentest|penetrasyon|red.?team|hacker|hacking|vulnerability|zafiyet|bug.?bounty|capt|sızma|owasp|cve|exploit|malware|firewall|ids|ips|siem|soc|threat|offensive|defensive|ctf/i, weight: 2, category: 'security' },
   { keywords: /yetenek|beceri|teknoloji|programlama|ne biliyor|hangi dil|skill|stack|tech|bilgi|uzman/i, weight: 1, category: 'skills' },
   { keywords: /python|flask|django/i, weight: 1, category: 'python' },
   { keywords: /javascript|js|node|nodejs|express|react|frontend/i, weight: 1, category: 'javascript' },
   { keywords: /typescript|ts/i, weight: 1, category: 'typescript' },
   { keywords: /java|spring|backend/i, weight: 1, category: 'java' },
-  { keywords: /ai|yapay zeka|openai|gpt|machine learning|ml|makine öğrenmesi|llm|chatgpt|artificial/i, weight: 1, category: 'ai' },
+  { keywords: /ai|yapay zeka|openai|gpt|machine learning|ml|makine öğrenmesi|llm|chatgpt|artificial|transformer|neural|deep learning|nlp|prompt|langchain|huggingface|computer vision/i, weight: 2, category: 'ai' },
   { keywords: /iletişim|contact|ulaş|mail|email|e-posta|sosyal medya|telefon|numara|ara|yaz|mesaj/i, weight: 1, category: 'contact' },
   { keywords: /linkedin/i, weight: 1, category: 'linkedin' },
   { keywords: /github|repo|repository|kod|kaynak/i, weight: 1, category: 'github' },
@@ -38,17 +38,20 @@ const keywordMatches: KeywordMatch[] = [
   { keywords: /eğitim|okul|üniversite|mezun|öğrenci|education|university|degree|ege/i, weight: 1, category: 'education' },
   { keywords: /hobi|ilgi|interest|merak|boş zaman|sevdiği/i, weight: 1, category: 'interests' },
   { keywords: /dil|language|ingilizce|türkçe|english|konuşuyor|boşnakça|hırvatça|rusça/i, weight: 1, category: 'languages' },
-  { keywords: /web|website|site|sayfa|frontend|backend|full.?stack/i, weight: 1, category: 'web' },
-  { keywords: /database|veritabanı|sql|mongo|postgres/i, weight: 1, category: 'database' },
-  { keywords: /api|rest|endpoint|entegrasyon/i, weight: 1, category: 'api' },
+  { keywords: /web|website|site|sayfa|full.?stack/i, weight: 1, category: 'web' },
+  { keywords: /database|veritabanı|sql|mongo|postgres|supabase|redis/i, weight: 1, category: 'database' },
+  { keywords: /api|rest|endpoint|entegrasyon|graphql|websocket/i, weight: 1, category: 'api' },
   { keywords: /güçlü|zayıf|avantaj|dezavantaj|artı|eksi/i, weight: 1, category: 'strengths' },
   { keywords: /hedef|gelecek|plan|vizyon|amaç|istek/i, weight: 1, category: 'goals' },
   { keywords: /cv|özgeçmiş|resume|portfolio indir/i, weight: 1, category: 'cv' },
   { keywords: /işe al|hire|çalış|takım|proje teklif|freelance|iş birliği/i, weight: 1, category: 'hire' },
-  { keywords: /fiyat|ücret|maliyet|bütçe|para|price|cost/i, weight: 1, category: 'pricing' },
+  { keywords: /fiyat|ücret|maliyet|bütçe|price|cost/i, weight: 1, category: 'pricing' },
   { keywords: /ne kadar|süre|zaman|hız|deadline/i, weight: 1, category: 'timeline' },
   { keywords: /work.?and.?travel|amerika|usa|abd|staj|exchange/i, weight: 1, category: 'exchange' },
   { keywords: /sertifika|certificate|certification/i, weight: 1, category: 'certification' },
+  { keywords: /docker|kubernetes|k8s|container|devops|ci.?cd|jenkins|github.?actions/i, weight: 1, category: 'devops' },
+  { keywords: /neden|motivasyon|başla|ilham|inspire|story|hikaye/i, weight: 1, category: 'motivation' },
+  { keywords: /şaka|espri|komik|gül|eğlen|fun|joke/i, weight: 1, category: 'fun' },
 ];
 
 function detectCategory(question: string): string {
@@ -122,13 +125,20 @@ Laçin, **Cyber Security Analyst** ve **Red Teamer** olarak çalışıyor!
 • Penetrasyon testleri ve zafiyet değerlendirmeleri
 • Bug Bounty programlarına katılım
 
-**🔐 Güvenlik Becerileri:**
-${portfolioData.skills.security.join(", ")}
+**� Güvenlik Yetenekleri:**
+${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
+
+**🎯 Uzmanlık Alanları:**
+• Offensive Security (Sızma Testi)
+• Defensive Security (SOC, SIEM)
+• Web Application Security
+• Network Security & Threat Intelligence
+• AI Security & Adversarial ML
 
 **📜 Sertifikalar:**
 ${portfolioData.certifications.map(c => `• ${c}`).join('\n')}
 
-Siber güvenlik alanında aktif olarak çalışıyor ve kendini geliştirmeye devam ediyor!`,
+Siber güvenlik alanında hem offensive hem defensive tarafta aktif olarak çalışıyor! 🛡️`,
 
   municipality: () => {
     const project = portfolioData.projects.find(p => p.name === "MSRS - Municipal Service Request System")!;
@@ -181,6 +191,9 @@ ${portfolioData.skills.languages.join(", ")}
 
 🔐 **Siber Güvenlik:**
 ${portfolioData.skills.security.join(", ")}
+
+🤖 **Yapay Zeka & ML:**
+${portfolioData.skills.ai.join(", ")}
 
 ⚙️ **Backend:**
 ${portfolioData.skills.backend.join(", ")}
@@ -256,17 +269,21 @@ Java, ${portfolioData.firstName}'in enterprise seviye projelerinde kullandığı
 
 Yapay zeka, ${portfolioData.firstName}'in en tutkulu olduğu alanlardan biri!
 
-**AI Projeleri:**
-• **InterviewAI** - Mülakat simülasyonu
-• **YouTube AI Assistant** - Video analizi
+**🧠 AI & ML Yetenekleri:**
+${portfolioData.skills.ai.map(skill => `• ${skill}`).join('\n')}
 
-**AI Becerileri:**
-• OpenAI API (GPT-3.5, GPT-4)
-• Prompt Engineering
-• LangChain
-• AI uygulama entegrasyonu
+**🚀 AI Projeleri:**
+• **InterviewAI** - AI destekli mülakat simülasyonu (OpenAI GPT-4)
+• **YouTube AI Assistant** - Video içerik analizi ve özetleme
+• **Portfolio AI Asistanı** - Şu an konuştuğunuz bu asistan!
 
-Yapay zekayı gerçek dünya problemlerini çözmek için kullanmayı seviyor!`,
+**💡 AI Uygulama Alanları:**
+• Doğal Dil İşleme (NLP)
+• Prompt Engineering & Optimization
+• LLM entegrasyonu ve fine-tuning
+• AI güvenliği ve adversarial attacks
+
+Yapay zekayı gerçek dünya problemlerini çözmek için kullanmayı seviyor ve bu alanda sürekli kendini geliştiriyor! 🌟`,
 
   contact: () => `${portfolioData.firstName}'e Ulaşın 📬
 
@@ -332,24 +349,32 @@ Bana şu konularda sorular sorabilirsiniz:
 **👤 Kişisel Bilgiler:**
 • Laçin kimdir?
 • Nerede yaşıyor?
-• İletişim bilgileri nedir?
+• Motivasyonu nedir?
+
+**🔐 Siber Güvenlik:**
+• Güvenlik yetenekleri neler?
+• Penetrasyon testi deneyimi
+• Sertifikaları neler?
+
+**🤖 Yapay Zeka:**
+• AI yetenekleri neler?
+• Hangi AI projeleri var?
+• Prompt engineering hakkında
 
 **💻 Teknik Beceriler:**
 • Hangi teknolojileri biliyor?
 • Python/JavaScript/Java hakkında
-• AI ve yapay zeka deneyimi
+• DevOps becerileri
 
 **🚀 Projeler:**
 • Projeleri nelerdir?
-• InterviewAI nedir?
-• YouTube AI Assistant hakkında
+• InterviewAI, PayMaki, MSRS...
+• ThatTicket.com hakkında
 
 **📞 İletişim:**
-• E-posta adresi
-• Telefon numarası
-• LinkedIn/GitHub
+• E-posta, telefon, LinkedIn, GitHub
 
-Herhangi bir konuda soru sorabilirsiniz! 😊`,
+💡 **İpucu:** Eğlenceli bir şey ister misiniz? "Şaka yap" deyin! 😄`,
 
   thanks: () => {
     const responses = [
@@ -541,6 +566,95 @@ ${portfolioData.certifications.map(c => `🏆 ${c}`).join('\n')}
 Hackviser tarafından verilen bu sertifika, penetrasyon testi konusundaki yetkinliği belgeler.
 
 Siber güvenlik alanında aktif olarak sertifikalarını geliştirmeye devam ediyor!`,
+
+  devops: () => `**DevOps & Altyapı Yetenekleri** ⚙️
+
+${portfolioData.firstName} modern DevOps pratiklerini uygulama konusunda deneyimlidir:
+
+🐳 **Containerization:**
+• Docker ile uygulama containerization
+• Multi-stage builds ve optimizasyon
+• Docker Compose ile orchestration
+
+☁️ **Cloud & Deployment:**
+• Bulut platformlarında deployment
+• CI/CD pipeline tasarımı
+• GitHub Actions ile otomasyon
+
+🔧 **Araçlar:**
+• Git versiyon kontrolü
+• Linux sistem yönetimi
+• Shell scripting
+
+Bu yetenekler, güvenli ve ölçeklenebilir altyapılar oluşturmada kritik öneme sahiptir!`,
+
+  motivation: () => {
+    const motivations = [
+      `**${portfolioData.firstName}'in Hikayesi** 💫
+
+Yazılım ve siber güvenliğe olan tutkusu, teknolojiyi güvenli ve erişilebilir hale getirme arzusundan doğdu.
+
+🎯 **Motivasyonları:**
+• Karmaşık problemleri çözmek
+• Güvenli sistemler tasarlamak
+• Yenilikçi çözümler üretmek
+• Sürekli öğrenmek ve gelişmek
+
+💡 **Felsefesi:**
+"Güvenlik bir ürün değil, bir süreçtir." Bu anlayışla her projede güvenliği önceliklendiriyor.
+
+Her yeni proje, yeni bir öğrenme fırsatı!`,
+      
+      `**Neden Siber Güvenlik?** 🔐
+
+${portfolioData.firstName} için siber güvenlik sadece bir meslek değil, bir misyon.
+
+🌟 **İlham Kaynakları:**
+• Dijital dünyayı daha güvenli kılma arzusu
+• Hacker zihniyetini anlama merakı
+• Savunma ve saldırı tekniklerini öğrenme tutkusu
+
+💪 **Sürükleyen Güç:**
+Her zafiyet bulduğunda, birinin güvenliğini korumuş oluyor. Bu tatmin, her şeye değer!`
+    ];
+    return motivations[Math.floor(Math.random() * motivations.length)];
+  },
+
+  fun: () => {
+    const jokes = [
+      `Haha! Bir siber güvenlik espirisi mi? 😄
+
+🔐 **Neden hackerlar parti vermez?**
+Çünkü herkesin ağına sızarlar! 
+
+😅 Şaka bir yana, ${portfolioData.firstName} işini çok ciddiye alır ama keyifle yapar!`,
+      
+      `Bir gülümseme için buradayım! 😊
+
+💡 **Yazılımcı ve siber güvenlikçi farkı:**
+Yazılımcı: "Çalışıyor!"
+Siber güvenlikçi: "Ama güvenli mi?" 🤔
+
+${portfolioData.firstName} her iki perspektifi de anlıyor!`,
+      
+      `Biraz eğlence! 🎉
+
+❓ **SQL injection nedir?**
+"SELECT * FROM jokes WHERE funny = true" -- ama cevap boş döner 😂
+
+Tamam, tamam... ciddi sorulara dönelim mi?`,
+
+      `Robot olarak espri yapmak zor ama deneyelim! 🤖
+
+💻 **99 little bugs in the code,**
+**99 little bugs...**
+**Take one down, patch it around,**
+**127 little bugs in the code!**
+
+Her yazılımcının günlük hayatı, değil mi? 😅`
+    ];
+    return jokes[Math.floor(Math.random() * jokes.length)];
+  },
 
   unknown: () => {
     const responses = [
