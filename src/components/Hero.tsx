@@ -118,7 +118,7 @@ const Hero: React.FC = () => {
     { text: "🚀 Projects", questionTr: "Projeleri nelerdir?", questionEn: "What are his projects?" },
     { text: "🤖 AI Skills", questionTr: "Yapay zeka ve AI yetenekleri nelerdir?", questionEn: "What are his AI skills?" },
     { text: "💼 Experience", questionTr: "İş deneyimi nedir?", questionEn: "What is his work experience?" },
-    { text: "📫 Contact", questionTr: "İletişim bilgileri nedir?", questionEn: "What are his contact details?" },
+    { text: "📫 Contact", questionTr: "İletişim", questionEn: "Contact info" },
     { text: "🎓 Education", questionTr: "Eğitim geçmişi nedir?", questionEn: "What is his education background?" },
     { text: "🌍 Languages", questionTr: "Hangi dilleri konuşuyor?", questionEn: "What languages does he speak?" }
   ] : [
@@ -127,7 +127,7 @@ const Hero: React.FC = () => {
     { text: "🚀 Projeleri", questionTr: "Projeleri nelerdir?", questionEn: "What are his projects?" },
     { text: "🤖 AI Yetenekleri", questionTr: "Yapay zeka ve AI yetenekleri nelerdir?", questionEn: "What are his AI skills?" },
     { text: "💼 Deneyim", questionTr: "İş deneyimi nedir?", questionEn: "What is his work experience?" },
-    { text: "📫 İletişim", questionTr: "İletişim bilgileri nedir?", questionEn: "What are his contact details?" },
+    { text: "📫 İletişim", questionTr: "İletişim", questionEn: "Contact info" },
     { text: "🎓 Eğitim", questionTr: "Eğitim geçmişi nedir?", questionEn: "What is his education background?" },
     { text: "🌍 Diller", questionTr: "Hangi dilleri konuşuyor?", questionEn: "What languages does he speak?" }
   ];
@@ -147,9 +147,6 @@ const Hero: React.FC = () => {
             </a>
             <a href={`mailto:${portfolioData.email}`} aria-label="Email">
               <i className="fas fa-envelope"></i>
-            </a>
-            <a href={`tel:${portfolioData.phone.replace(/\s/g, '')}`} aria-label="Phone">
-              <i className="fas fa-phone"></i>
             </a>
           </div>
         </div>

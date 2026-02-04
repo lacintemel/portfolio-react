@@ -22,21 +22,21 @@ const keywordMatches: KeywordMatch[] = [
   { keywords: /paymaki|ödeme|fintech|para|transfer/i, weight: 2, category: 'paymaki' },
   { keywords: /gayrimenkul|emlak|ev|konut|arsa|daire/i, weight: 2, category: 'realestate' },
   { keywords: /siber|güvenlik|security|pentest|penetrasyon|red.?team|hacker|hacking|vulnerability|zafiyet|bug.?bounty|capt|sızma|owasp|cve|exploit|malware|firewall|ids|ips|siem|soc|threat|offensive|defensive|ctf/i, weight: 2, category: 'security' },
-  { keywords: /yetenek|beceri|teknoloji|programlama|ne biliyor|hangi dil|skill|stack|tech|bilgi|uzman/i, weight: 1, category: 'skills' },
+  { keywords: /yetenek|beceri|teknoloji|programlama|ne biliyor|hangi dil|skill|stack|tech|uzman/i, weight: 1, category: 'skills' },
   { keywords: /python|flask|django/i, weight: 1, category: 'python' },
   { keywords: /javascript|js|node|nodejs|express|react|frontend/i, weight: 1, category: 'javascript' },
   { keywords: /typescript|ts/i, weight: 1, category: 'typescript' },
   { keywords: /java|spring|backend/i, weight: 1, category: 'java' },
   { keywords: /ai|yapay zeka|openai|gpt|machine learning|ml|makine öğrenmesi|llm|chatgpt|artificial|transformer|neural|deep learning|nlp|prompt|langchain|huggingface|computer vision/i, weight: 2, category: 'ai' },
-  { keywords: /iletişim|contact|ulaş|mail|email|e-posta|sosyal medya|telefon|numara|ara|yaz|mesaj/i, weight: 1, category: 'contact' },
+  { keywords: /iletişim|contact|ulaş|mail|email|e-posta|sosyal medya|telefon|numara|ara|yaz|mesaj/i, weight: 2, category: 'contact' },
   { keywords: /linkedin/i, weight: 1, category: 'linkedin' },
   { keywords: /github|repo|repository|kod|kaynak/i, weight: 1, category: 'github' },
-  { keywords: /deneyim|tecrübe|experience|çalıştı|iş|kariyer|geçmiş|vulnerday/i, weight: 1, category: 'experience' },
+  { keywords: /deneyim|tecrübe|experience|çalıştı|iş hayat|iş tec|kariyer|geçmiş|vulnerday|staj/i, weight: 1, category: 'experience' },
   { keywords: /ne yapabilir|ne sorabilir|yardım|help|nasıl kullan|komut|özellik/i, weight: 1, category: 'help' },
   { keywords: /teşekkür|sağol|eyvallah|thanks|thank you|memnun/i, weight: 1, category: 'thanks' },
   { keywords: /nerede|lokasyon|şehir|ülke|konum|yaşıyor|location/i, weight: 1, category: 'location' },
   { keywords: /eğitim|okul|üniversite|mezun|öğrenci|education|university|degree|ege/i, weight: 1, category: 'education' },
-  { keywords: /hobi|ilgi|interest|merak|boş zaman|sevdiği/i, weight: 1, category: 'interests' },
+  { keywords: /hobi|ilgi alan|interest|merak|boş zaman|sevdiği/i, weight: 1, category: 'interests' },
   { keywords: /dil|language|ingilizce|türkçe|english|konuşuyor|boşnakça|hırvatça|rusça/i, weight: 1, category: 'languages' },
   { keywords: /web|website|site|sayfa|full.?stack/i, weight: 1, category: 'web' },
   { keywords: /database|veritabanı|sql|mongo|postgres|supabase|redis/i, weight: 1, category: 'database' },
@@ -55,7 +55,7 @@ const keywordMatches: KeywordMatch[] = [
 ];
 
 function detectCategory(question: string): string {
-  const q = question.toLowerCase().trim();
+  const q = question.toLocaleLowerCase('tr-TR').trim();
   
   let bestMatch = { category: 'unknown', weight: 0 };
   
@@ -90,8 +90,7 @@ ${portfolioData.longBio}
 • ${portfolioData.stats.technologies} farklı teknoloji
 
 📍 Konum: ${portfolioData.location}
-📧 E-posta: ${portfolioData.email}
-📱 Telefon: ${portfolioData.phone}`,
+📧 E-posta: ${portfolioData.email}`,
 
   projects: () => {
     const projectList = portfolioData.projects.map(p => 
@@ -288,11 +287,11 @@ Yapay zekayı gerçek dünya problemlerini çözmek için kullanmayı seviyor ve
   contact: () => `${portfolioData.firstName}'e Ulaşın 📬
 
 📧 **E-posta:** ${portfolioData.email}
-📱 **Telefon:** ${portfolioData.phone}
 
 🔗 **Sosyal Medya:**
 • GitHub: ${portfolioData.github}
 • LinkedIn: ${portfolioData.linkedin}
+• Instagram: ${portfolioData.instagram}
 
 İş birliği, proje teklifi veya sadece merhaba demek için iletişime geçmekten çekinmeyin! 
 
@@ -815,11 +814,11 @@ He loves using AI to solve real-world problems and continuously improves himself
   contact: () => `Contact ${portfolioData.firstName} 📬
 
 📧 **Email:** ${portfolioData.email}
-📱 **Phone:** ${portfolioData.phone}
 
 🔗 **Social Media:**
 • GitHub: ${portfolioData.github}
 • LinkedIn: ${portfolioData.linkedin}
+• Instagram: ${portfolioData.instagram}
 
 Don't hesitate to reach out for collaboration, project proposals, or just to say hello!
 

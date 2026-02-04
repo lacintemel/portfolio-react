@@ -1,5 +1,10 @@
 {
   "name": "portfolio-react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lacintemel/portfolio-react.git"
+  },
+  "homepage": "https://lacintemel.github.io/portfolio-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

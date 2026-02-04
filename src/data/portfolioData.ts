@@ -35,6 +35,7 @@ export interface PortfolioData {
   phone: string;
   github: string;
   linkedin: string;
+  instagram: string;
   avatar: string;
   skills: {
     languages: string[];
@@ -68,9 +69,10 @@ Siber güvenliğin yanı sıra Full Stack yazılım geliştirme alanında da akt
 Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen teknoloji dünyasında sürekli öğrenmeyi, kendimi teknik ve analitik açıdan geliştirmeyi ve edindiğim bilgileri gerçek dünya problemlerine uygulamayı hedefliyorum. Takım çalışmasına yatkın, öğrenmeye açık ve sorumluluk almaktan çekinmeyen bir yapıya sahibim.`,
   location: "Türkiye",
   email: "lacintemel7@gmail.com",
-  phone: "+90 536 717 97 31",
+  phone: "",
   github: "https://github.com/lacintemel",
   linkedin: "https://www.linkedin.com/in/lacintemel/",
+  instagram: "https://www.instagram.com/lacintemel/",
   avatar: "https://avatars.githubusercontent.com/u/148385081?v=4",
   
   skills: {
