@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { getAIResponse, formatMessage } from '../utils/aiService';
+import { getAIResponse, formatMessage, resetConversation } from '../utils/aiService';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import '../styles/Hero.css';
@@ -32,8 +32,9 @@ const Hero: React.FC = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Reset messages when language changes
+  // Reset messages and conversation memory when language changes
   useEffect(() => {
+    resetConversation();
     setMessages([{
       id: 1,
       content: getWelcomeMessage(),
