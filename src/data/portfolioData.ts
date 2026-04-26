@@ -74,7 +74,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
   linkedin: "https://www.linkedin.com/in/lacintemel/",
   instagram: "https://www.instagram.com/lacintemel/",
   avatar: "https://avatars.githubusercontent.com/u/148385081?v=4",
-  
+
   skills: {
     languages: ["Python", "JavaScript", "TypeScript", "Java", "C#", "C"],
     security: ["Penetration Testing", "Red Teaming", "Vulnerability Assessment", "Bug Bounty", "AI Security", "Network Security", "SIEM", "Threat Intelligence"],
@@ -91,7 +91,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
     "Hırvatça (A2)",
     "Rusça (A2)"
   ],
-  
+
   experiences: [
     {
       title: "Cyber Security Analyst",
@@ -106,7 +106,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       ]
     }
   ],
-  
+
   educations: [
     {
       degree: "Bilgisayar Mühendisliği Lisans",
@@ -126,7 +126,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
   exchangePrograms: [
     "Work and Travel USA (Temmuz 2025 - Ekim 2025)"
   ],
-  
+
   projects: [
     {
       name: "InterviewAI",
@@ -172,14 +172,38 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       github: "https://github.com/lacintemel/Gayrimenkul_Merkezim",
       icon: "home",
       image: "/images/GayrimenkulMerkezim.png"
+    },
+    {
+      name: "Sobutay Ticaret",
+      description: "Kurumsal e-ticaret platformu",
+      longDescription: "Sobutay Ticaret için geliştirilen, modern ve kullanıcı dostu arayüze sahip kurumsal web sitesi. Firmanın dijital varlığını güçlendiren, hızlı ve responsive bir yapıya sahiptir.",
+      technologies: ["React", "TypeScript", "TailwindCSS"],
+      github: "https://github.com/lacintemel",
+      icon: "briefcase"
+    },
+    {
+      name: "Gelatte",
+      description: "Çoklu dil destekli lüks e-ticaret platformu",
+      longDescription: "Gelatte markası için tasarlanan premium e-ticaret platformu. Modern bir alışveriş deneyimi sunmak amacıyla gelişmiş sepet yönetimi, ürün filtreleme, dinamik animasyonlar ve Türkçe, İngilizce, Almanca, Rusça olmak üzere 4 farklı dil desteği içerir.",
+      technologies: ["React", "TypeScript", "TailwindCSS", "Context API"],
+      github: "https://github.com/lacintemel",
+      icon: "shopping-cart"
+    },
+    {
+      name: "Tufan Design",
+      description: "Lüks mimarlık portfolyo sitesi",
+      longDescription: "Tufan Design Mimarlık Stüdyosu için tasarlanan modern portfolyo web sitesi. Mimari projelerin ve hizmetlerin premium bir hissiyatla sergilendiği, gelişmiş UI/UX detaylarına ve akıcı sayfa geçişlerine sahip bir projedir.",
+      technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
+      github: "https://github.com/lacintemel/Tufan-design",
+      icon: "building"
     }
   ],
-  
+
   stats: {
     projects: "10+",
     contributions: "1000+",
     technologies: "20+"
   },
-  
+
   interests: ["Siber Güvenlik", "Penetrasyon Testi", "Web Geliştirme", "Bug Bounty", "Network Security"]
 };
