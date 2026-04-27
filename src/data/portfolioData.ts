@@ -178,7 +178,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       description: "Kurumsal e-ticaret platformu",
       longDescription: "Sobutay Ticaret için geliştirilen, modern ve kullanıcı dostu arayüze sahip kurumsal web sitesi. Firmanın dijital varlığını güçlendiren, hızlı ve responsive bir yapıya sahiptir.",
       technologies: ["React", "TypeScript", "TailwindCSS"],
-      github: "https://github.com/lacintemel",
+      github: "https://github.com/lacintemel/SobutayTicaret",
       icon: "briefcase"
     },
     {
@@ -186,7 +186,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       description: "Çoklu dil destekli lüks e-ticaret platformu",
       longDescription: "Gelatte markası için tasarlanan premium e-ticaret platformu. Modern bir alışveriş deneyimi sunmak amacıyla gelişmiş sepet yönetimi, ürün filtreleme, dinamik animasyonlar ve Türkçe, İngilizce, Almanca, Rusça olmak üzere 4 farklı dil desteği içerir.",
       technologies: ["React", "TypeScript", "TailwindCSS", "Context API"],
-      github: "https://github.com/lacintemel",
+      github: "https://github.com/lacintemel/Gelatte",
       icon: "shopping-cart"
     },
     {
