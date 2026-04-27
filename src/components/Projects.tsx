@@ -1,5 +1,5 @@
-import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import React, { useState } from 'react';
+import { portfolioData, Project } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import '../styles/Projects.css';
 
@@ -10,7 +10,11 @@ const iconMap: Record<string, string> = {
   'ticket': 'fa-ticket-alt',
   'credit-card': 'fa-credit-card',
   'home': 'fa-home',
-  'users': 'fa-users'
+  'users': 'fa-users',
+  'briefcase': 'fa-briefcase',
+  'shopping-cart': 'fa-shopping-cart',
+  'building': 'fa-building',
+  'shopping-bag': 'fa-shopping-bag'
 };
 
 // English project descriptions
@@ -24,6 +28,7 @@ const projectDescriptionsEN: Record<string, string> = {
 
 const Projects: React.FC = () => {
   const { language, t } = useLanguage();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="projects">
@@ -31,7 +36,7 @@ const Projects: React.FC = () => {
         <h2 className="section-title">{t('projects.title')}</h2>
         <div className="projects-grid">
           {portfolioData.projects.map((project, index) => (
-            <div className="project-card" key={index}>
+            <div className="project-card" key={index} onClick={() => setSelectedProject(project)} style={{ cursor: 'pointer' }}>
               <div className="project-image">
                 <div className="project-overlay">
                   <a 
@@ -39,6 +44,7 @@ const Projects: React.FC = () => {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="project-link"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <i className="fab fa-github"></i>
                   </a>
@@ -73,6 +79,49 @@ const Projects: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Project Modal */}
+      {selectedProject && (
+        <div className="project-modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="project-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="project-modal-close" onClick={() => setSelectedProject(null)}>
+              <i className="fas fa-times"></i>
+            </button>
+            {selectedProject.image ? (
+              <div className="project-modal-image">
+                <img src={selectedProject.image} alt={selectedProject.name} />
+              </div>
+            ) : (
+              <div className="project-modal-image-placeholder">
+                <i className={`fas ${iconMap[selectedProject.icon] || 'fa-code'}`}></i>
+              </div>
+            )}
+            <div className="project-modal-info">
+              <h3>{selectedProject.name}</h3>
+              <p className="project-modal-description">
+                {language === 'en' ? (projectDescriptionsEN[selectedProject.name] || selectedProject.description) : selectedProject.description}
+              </p>
+              <p className="project-modal-long-description">
+                {selectedProject.longDescription}
+              </p>
+              <div className="project-tags" style={{ marginBottom: '20px' }}>
+                {selectedProject.technologies.map((tech, techIndex) => (
+                  <span className="tag" key={techIndex}>{tech}</span>
+                ))}
+              </div>
+              <a 
+                href={selectedProject.github} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="project-modal-btn"
+              >
+                <i className="fab fa-github" style={{ marginRight: '8px' }}></i>
+                {language === 'en' ? 'View Source' : 'Kaynak Kodu Gör'}
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
