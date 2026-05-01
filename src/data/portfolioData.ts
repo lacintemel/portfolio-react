@@ -175,11 +175,12 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
     },
     {
       name: "Sobutay Ticaret",
-      description: "Kurumsal e-ticaret platformu",
+      description: "Kurumsal website",
       longDescription: "Sobutay Ticaret için geliştirilen, modern ve kullanıcı dostu arayüze sahip kurumsal web sitesi. Firmanın dijital varlığını güçlendiren, hızlı ve responsive bir yapıya sahiptir.",
       technologies: ["React", "TypeScript", "TailwindCSS"],
       github: "https://github.com/lacintemel/SobutayTicaret",
-      icon: "briefcase"
+      icon: "briefcase",
+      image: "/images/SobutayTicaret.png"
     },
     {
       name: "Gelatte",
@@ -187,7 +188,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "Gelatte markası için tasarlanan premium e-ticaret platformu. Modern bir alışveriş deneyimi sunmak amacıyla gelişmiş sepet yönetimi, ürün filtreleme, dinamik animasyonlar ve Türkçe, İngilizce, Almanca, Rusça olmak üzere 4 farklı dil desteği içerir.",
       technologies: ["React", "TypeScript", "TailwindCSS", "Context API"],
       github: "https://github.com/lacintemel/Gelatte",
-      icon: "shopping-cart"
+      icon: "shopping-cart",
+      image: "/images/gelatte.png"
     },
     {
       name: "Tufan Design",
@@ -195,7 +197,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       longDescription: "Tufan Design Mimarlık Stüdyosu için tasarlanan modern portfolyo web sitesi. Mimari projelerin ve hizmetlerin premium bir hissiyatla sergilendiği, gelişmiş UI/UX detaylarına ve akıcı sayfa geçişlerine sahip bir projedir.",
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
       github: "https://github.com/lacintemel/Tufan-design",
-      icon: "building"
+      icon: "building",
+      image: "/images/TufanDesign.png"
     }
   ],
 
