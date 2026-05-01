@@ -51,7 +51,7 @@ const Projects: React.FC = () => {
                 </div>
                 {project.image ? (
                   <img 
-                    src={project.image} 
+                    src={`${process.env.PUBLIC_URL || ''}${project.image}`} 
                     alt={project.name}
                     className="project-logo"
                     onError={(e) => {
@@ -89,7 +89,7 @@ const Projects: React.FC = () => {
             </button>
             {selectedProject.image ? (
               <div className="project-modal-image">
-                <img src={selectedProject.image} alt={selectedProject.name} />
+                <img src={`${process.env.PUBLIC_URL || ''}${selectedProject.image}`} alt={selectedProject.name} />
               </div>
             ) : (
               <div className="project-modal-image-placeholder">
