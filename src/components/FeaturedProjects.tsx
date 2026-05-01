@@ -101,7 +101,7 @@ const FeaturedProjects: React.FC = () => {
                       onClick={() => openLightbox(screenshot)}
                     >
                       <img 
-                        src={screenshot.src} 
+                        src={`${process.env.PUBLIC_URL || ''}${screenshot.src}`} 
                         alt={language === 'en' ? screenshot.titleEn : screenshot.titleTr}
                         loading="lazy"
                       />
@@ -179,7 +179,7 @@ const FeaturedProjects: React.FC = () => {
             <button className="lightbox-close" onClick={closeLightbox}>
               <i className="fas fa-times"></i>
             </button>
-            <img src={selectedImage.src} alt={language === 'en' ? selectedImage.titleEn : selectedImage.titleTr} />
+            <img src={`${process.env.PUBLIC_URL || ''}${selectedImage.src}`} alt={language === 'en' ? selectedImage.titleEn : selectedImage.titleTr} />
             <div className="lightbox-caption">
               <h4>{language === 'en' ? selectedImage.titleEn : selectedImage.titleTr}</h4>
               <p>{language === 'en' ? selectedImage.descriptionEn : selectedImage.descriptionTr}</p>
