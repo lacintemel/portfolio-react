@@ -1,4 +1,4 @@
-/* ===== CSS Variables ===== */
+/* ===== CSS Variables - Premium Design System ===== */
 :root {
   --bg-primary: #0a0a0f;
   --bg-secondary: #12121a;
@@ -10,12 +10,17 @@
   --accent-primary: #10b981;
   --accent-secondary: #34d399;
   --accent-gradient: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
   --border-color: #2a2a3a;
+  --border-glow: rgba(16, 185, 129, 0.2);
   --shadow-color: rgba(16, 185, 129, 0.15);
+  --shadow-heavy: rgba(0, 0, 0, 0.6);
   --success-color: #10b981;
   --transition-fast: 0.2s ease;
   --transition-medium: 0.3s ease;
   --transition-slow: 0.5s ease;
+  --glass-bg: rgba(18, 18, 26, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.06);
 }
 
 /* ===== Reset & Base ===== */
@@ -63,6 +68,10 @@ img {
   text-align: center;
   margin-bottom: 60px;
   position: relative;
+  background: linear-gradient(135deg, #fff 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .section-title::after {
@@ -75,6 +84,36 @@ img {
   height: 4px;
   background: var(--accent-gradient);
   border-radius: 2px;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Section entrance animations */
+section {
+  opacity: 1;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: #fff;
 }
 
 @media (max-width: 768px) {
