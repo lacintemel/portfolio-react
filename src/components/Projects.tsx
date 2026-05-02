@@ -14,11 +14,13 @@ const iconMap: Record<string, string> = {
   'briefcase': 'fa-briefcase',
   'shopping-cart': 'fa-shopping-cart',
   'building': 'fa-building',
-  'shopping-bag': 'fa-shopping-bag'
+  'shopping-bag': 'fa-shopping-bag',
+  'chart-bar': 'fa-chart-bar'
 };
 
 // English project descriptions
 const projectDescriptionsEN: Record<string, string> = {
+  'Kazıkmı.com': 'AI-powered vehicle price analysis & valuation platform',
   'InterviewAI': 'NLP-based intelligent interview simulation app',
   'PayMaki': 'Modern Human Resources Management System',
   'ThatTicket.com': 'Java Swing ticket reservation system',
