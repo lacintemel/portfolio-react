@@ -52,14 +52,16 @@
 }
 
 .featured-card {
-  background: linear-gradient(145deg, rgba(20, 40, 35, 0.9), rgba(15, 30, 25, 0.95));
+  background: linear-gradient(145deg, rgba(20, 40, 35, 0.8), rgba(15, 30, 25, 0.9));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 24px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(16, 185, 129, 0.1);
+    0 0 0 1px rgba(16, 185, 129, 0.08);
   position: relative;
   transition: all 0.4s ease;
 }
