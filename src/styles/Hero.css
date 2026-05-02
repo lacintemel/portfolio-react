@@ -6,10 +6,58 @@
   align-items: center;
   padding: 100px 20px 50px;
   position: relative;
+  overflow: hidden;
   background: 
-    radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(52, 211, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(52, 211, 153, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 70%),
     var(--bg-primary);
+}
+
+/* Floating Particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.3);
+  animation: floatParticle linear infinite;
+}
+
+.particle-0 { width: 3px; height: 3px; background: rgba(16, 185, 129, 0.2); }
+.particle-1 { width: 5px; height: 5px; background: rgba(52, 211, 153, 0.25); }
+.particle-2 { width: 2px; height: 2px; background: rgba(110, 231, 183, 0.3); }
+.particle-3 { width: 6px; height: 6px; background: rgba(16, 185, 129, 0.15); }
+.particle-4 { width: 3px; height: 3px; background: rgba(99, 102, 241, 0.15); }
+
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+/* Entrance Animations */
+.fade-in-up {
+  animation: fadeInUpSmooth 0.8s ease-out both;
+}
+
+@keyframes fadeInUpSmooth {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content {
@@ -19,6 +67,8 @@
   gap: 50px;
   max-width: 1200px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-text {
@@ -43,6 +93,23 @@
   font-size: 1.3rem;
   color: var(--text-secondary);
   margin-bottom: 25px;
+  min-height: 2em;
+}
+
+/* Typing Cursor Animation */
+.typing-cursor {
+  color: var(--accent-primary);
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+.typing-cursor.blink {
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .social-links {
@@ -74,15 +141,30 @@
   box-shadow: 0 10px 30px var(--shadow-color);
 }
 
-/* AI Chat Container */
+/* AI Chat Container - Glassmorphism */
 .ai-chat-container {
   width: 100%;
   max-width: 600px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: rgba(18, 18, 26, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.15);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(16, 185, 129, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: fadeInUpSmooth 0.8s ease-out 0.6s both;
+  transition: all 0.4s ease;
+}
+
+.ai-chat-container:hover {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(16, 185, 129, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .chat-header {
