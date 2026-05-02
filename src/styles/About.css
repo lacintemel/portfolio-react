@@ -23,7 +23,17 @@
   border: 3px solid transparent;
   background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
               var(--accent-gradient) border-box;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(16, 185, 129, 0.1);
+  transition: all 0.4s ease;
+}
+
+.image-frame:hover {
+  transform: scale(1.03);
+  box-shadow: 
+    0 30px 60px -12px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(16, 185, 129, 0.15);
 }
 
 .image-frame img {
@@ -47,6 +57,17 @@
 
 .stat-item {
   text-align: center;
+  padding: 15px 25px;
+  background: rgba(21, 21, 31, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  border-color: rgba(16, 185, 129, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
 }
 
 .stat-number {
