@@ -42,8 +42,10 @@
   align-items: center;
   gap: 15px;
   padding: 25px 20px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: rgba(18, 18, 26, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   transition: all var(--transition-medium);
   overflow: hidden;
@@ -68,9 +70,11 @@
 }
 
 .contact-item:hover {
-  border-color: var(--accent-primary);
+  border-color: rgba(16, 185, 129, 0.3);
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px -10px var(--shadow-color);
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(16, 185, 129, 0.08);
 }
 
 .contact-icon {
