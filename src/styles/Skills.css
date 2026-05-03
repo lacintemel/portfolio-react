@@ -26,7 +26,7 @@
   background: rgba(21, 21, 31, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 24px;
   padding: 35px;
   transition: all var(--transition-medium);
@@ -51,9 +51,10 @@
 }
 
 .skill-category:hover {
-  border-color: var(--accent-primary);
+  border-color: rgba(16, 185, 129, 0.25);
   box-shadow: 
-    0 20px 50px -15px var(--shadow-color),
+    0 20px 50px -15px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(16, 185, 129, 0.06),
     inset 0 0 30px rgba(16, 185, 129, 0.03);
   transform: translateY(-8px);
 }
