@@ -57,6 +57,36 @@ const featuredProjects: FeaturedProject[] = [
     ],
     comingSoon: true,
     github: "https://github.com/lacintemel/PayMaki"
+  },
+  {
+    name: "Kazıkmı.com",
+    taglineTr: "AI Destekli Araç Fiyat Analiz Platformu",
+    taglineEn: "AI-Powered Vehicle Price Analysis Platform",
+    descriptionTr: "İkinci el araç piyasasında alıcıların bilinçli kararlar vermesini sağlayan yapay zekâ destekli fiyat analiz platformu. Makine öğrenmesi modelleri ile milyonlarca ilan verisi analiz edilerek doğru fiyat tahmini sunulur.",
+    descriptionEn: "An AI-powered price analysis platform that enables buyers in the used vehicle market to make informed decisions. Machine learning models analyze millions of listing data to provide accurate price predictions.",
+    featuresTr: [
+      "📊 Kazık Skoru Analizi",
+      "🔍 Piyasa Fiyat Karşılaştırması",
+      "📈 Amortisman Tahmini",
+      "🤖 ML Fiyat Modelleme",
+      "🚗 Benzer Araç Eşleştirme",
+      "📉 Pazar Trend Analizi"
+    ],
+    featuresEn: [
+      "📊 Overpricing Score Analysis",
+      "🔍 Market Price Comparison",
+      "📈 Depreciation Prediction",
+      "🤖 ML Price Modeling",
+      "🚗 Similar Vehicle Matching",
+      "📉 Market Trend Analysis"
+    ],
+    technologies: ["Python", "Playwright", "Pandas", "scikit-learn", "Supabase", "React", "TypeScript"],
+    screenshots: [
+      { src: "/images/kazikmi.png", titleTr: "Fiyat Analizi", titleEn: "Price Analysis", descriptionTr: "Araç fiyat analizi ve kazık skoru", descriptionEn: "Vehicle price analysis and overpricing score" }
+    ],
+    comingSoon: true,
+    github: "https://github.com/lacintemel/kazikmi",
+    liveUrl: "https://kazikmi.com"
   }
 ];
 
