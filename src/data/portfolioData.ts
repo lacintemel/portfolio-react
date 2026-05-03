@@ -129,6 +129,15 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
 
   projects: [
     {
+      name: "Kazıkmı.com",
+      description: "AI destekli araç fiyat analiz ve değerleme platformu",
+      longDescription: "Kazıkmı.com, ikinci el araç piyasasında alıcıların bilinçli kararlar vermesini sağlayan yapay zekâ destekli bir fiyat analiz platformudur. Kullanıcılar araç ilanlarını yapıştırarak veya arama yaparak piyasa fiyat analizi, kazık skoru (aşırı fiyatlandırma tespiti), benzer araç karşılaştırmaları, amortisman tahmini ve pazar trendlerini görebilir. Makine öğrenmesi modelleri ile milyonlarca ilan verisi analiz edilerek doğru fiyat tahmini sunulur.",
+      technologies: ["Python", "Playwright", "Pandas", "scikit-learn", "Supabase", "React", "TypeScript"],
+      github: "https://github.com/lacintemel/kazikmi",
+      icon: "chart-bar",
+      image: "/images/kazikmi.png"
+    },
+    {
       name: "InterviewAI",
       description: "NLP tabanlı akıllı mülakat simülasyon uygulaması",
       longDescription: "InterviewAI, doğal dil işleme (NLP) ve makine öğrenmesi teknolojileri kullanarak mülakat pratiği yapmanıza olanak tanıyan masaüstü uygulamasıdır. Sentence Transformers ile semantik analiz, duygu analizi, anahtar kelime çıkarımı ve yanıt puanlama özellikleri sunar. CustomTkinter ile modern bir arayüze sahiptir.",
