@@ -85,6 +85,11 @@ const keywordMatches: KeywordMatch[] = [
     weight: 2.0, category: 'paymaki'
   },
   {
+    keywords: /kaz[ıi]k|kaz[ıi]km[ıi]|araç|araba|fiyat\s?analiz|oto|otomobil|ikinci\s?el|sahibinden|amortisman|araç\s?değerleme|piyasa\s?fiyat|araç\s?fiyat|vehicle|car\s?price/i,
+    keywordsEN: /kaz[ıi]k|kaz[ıi]km[ıi]|vehicle|car|price\s?analy|auto|automobile|second\s?hand|depreciation|valuation|market\s?price|overpriced/i,
+    weight: 2.5, category: 'kazikmi'
+  },
+  {
     keywords: /gayrimenkul|emlak|ev|konut|arsa|daire|apartman|resident/i,
     keywordsEN: /real\s?estate|apartment|property|housing|resident/i,
     weight: 2.0, category: 'realestate'
@@ -247,6 +252,28 @@ const keywordMatches: KeywordMatch[] = [
 ];
 
 // ─── Scoring Engine ──────────────────────────────────────────────────
+// ─── Fuzzy Matching Helper ────────────────────────────────────────────
+function fuzzyMatch(input: string, target: string, threshold = 0.7): boolean {
+  const a = input.toLowerCase();
+  const b = target.toLowerCase();
+  if (a.includes(b) || b.includes(a)) return true;
+  if (a.length < 3 || b.length < 3) return a === b;
+  
+  // Simple bigram similarity
+  const getBigrams = (s: string) => {
+    const bigrams = new Set<string>();
+    for (let i = 0; i < s.length - 1; i++) bigrams.add(s.substring(i, i + 2));
+    return bigrams;
+  };
+  const aBigrams = getBigrams(a);
+  const bBigrams = getBigrams(b);
+  let matches = 0;
+  aBigrams.forEach(bg => { if (bBigrams.has(bg)) matches++; });
+  const similarity = (2 * matches) / (aBigrams.size + bBigrams.size);
+  return similarity >= threshold;
+}
+
+// ─── Enhanced Scoring Engine ─────────────────────────────────────────
 function scoreCategories(question: string, lang: 'tr' | 'en'): ScoredCategory[] {
   const q = question.toLocaleLowerCase(lang === 'tr' ? 'tr-TR' : 'en-US').trim();
   const scores = new Map<string, number>();
@@ -261,6 +288,35 @@ function scoreCategories(question: string, lang: 'tr' | 'en'): ScoredCategory[] 
     } else if (altPattern.test(q)) {
       // Cross-language fallback at 70% weight
       scores.set(match.category, (scores.get(match.category) || 0) + match.weight * 0.7);
+    }
+  }
+
+  // Fuzzy matching for project names (catches typos like "kazikm", "paymkı", etc.)
+  const projectFuzzyMap: Record<string, string> = {
+    'kazikmi': 'kazikmi', 'kazıkmı': 'kazikmi', 'kazik': 'kazikmi',
+    'interviewai': 'interviewai', 'interview': 'interviewai',
+    'paymaki': 'paymaki', 'thatticket': 'ticket',
+    'msrs': 'municipality', 'gayrimenkul': 'realestate', 'gelatte': 'projects'
+  };
+  
+  const words = q.split(/\s+/);
+  for (const word of words) {
+    if (word.length < 3) continue;
+    for (const [target, category] of Object.entries(projectFuzzyMap)) {
+      if (fuzzyMatch(word, target, 0.65) && !scores.has(category)) {
+        scores.set(category, (scores.get(category) || 0) + 1.5);
+      }
+    }
+  }
+
+  // Contextual boost: if conversation is about projects, boost project-related matches
+  const lastCat = getLastCategory();
+  if (lastCat === 'projects' && scores.size > 0) {
+    const projectCategories = ['interviewai', 'municipality', 'ticket', 'paymaki', 'realestate', 'kazikmi'];
+    for (const cat of projectCategories) {
+      if (scores.has(cat)) {
+        scores.set(cat, (scores.get(cat) || 0) + 0.5);
+      }
     }
   }
 
@@ -428,6 +484,31 @@ ${project.longDescription}
 💻 **Kullanılan Teknolojiler:** ${project.technologies.join(', ')}
 
 🔗 GitHub: ${project.github}`;
+  },
+
+  kazikmi: () => {
+    const project = portfolioData.projects.find(p => p.name === 'Kazıkmı.com')!;
+    return `**${project.name}** 🚗💰
+
+${project.longDescription}
+
+**🎯 Temel Özellikler:**
+• Kazık Skoru — İlanın piyasa fiyatına göre aşırı fiyatlandırılıp fiyatlandırılmadığını tespit eder
+• Piyasa Fiyat Analizi — Milyonlarca ilan verisinden gerçek piyasa değerini hesaplar
+• Benzer Araç Karşılaştırması — Aynı model, yıl ve km aralığındaki ilanlarla kıyaslama
+• Amortisman Tahmini — Aracın gelecekteki değer kaybını tahmin eder
+• Pazar Trend Analizi — Seçili modelin fiyat trendlerini görselleştirir
+
+**🧠 Yapay Zeka Altyapısı:**
+• Playwright ile otonom veri toplama (web scraping)
+• Pandas ile büyük veri işleme ve feature engineering
+• scikit-learn ile ML fiyat modelleme
+• Supabase ile gerçek zamanlı veri yönetimi
+
+💻 **Teknolojiler:** ${project.technologies.join(', ')}
+
+🔗 GitHub: ${project.github}
+🌐 Web: https://kazikmi.com`;
   },
 
   skills: () => `${portfolioData.firstName}'in Teknik Yetenekleri 🛠️
@@ -1067,6 +1148,31 @@ ${project.longDescription}
 🔗 GitHub: ${project.github}`;
   },
 
+  kazikmi: () => {
+    const project = portfolioData.projects.find(p => p.name === 'Kazıkmı.com')!;
+    return `**${project.name}** 🚗💰
+
+${project.longDescription}
+
+**🎯 Key Features:**
+• Overpricing Score — Detects whether a listing is overpriced compared to market value
+• Market Price Analysis — Calculates real market value from millions of listing data
+• Similar Vehicle Comparison — Compares with listings of same model, year, and mileage range
+• Depreciation Prediction — Predicts future value loss of the vehicle
+• Market Trend Analysis — Visualizes price trends for selected models
+
+**🧠 AI Infrastructure:**
+• Autonomous data collection with Playwright (web scraping)
+• Big data processing and feature engineering with Pandas
+• ML price modeling with scikit-learn
+• Real-time data management with Supabase
+
+💻 **Technologies:** ${project.technologies.join(', ')}
+
+🔗 GitHub: ${project.github}
+🌐 Web: https://kazikmi.com`;
+  },
+
   skills: () => `${portfolioData.firstName}'s Technical Skills 🛠️
 
 💻 **Programming Languages:**
@@ -1673,6 +1779,24 @@ En hızlı dönüş genellikle e-posta üzerinden olur!`,
 
 **Kendini Geliştirme:**
 Online kurslar, CTF yarışmaları ve kişisel projelerle sürekli öğrenme sürecinde.`,
+
+  kazikmi: () => `Kazıkmı.com hakkında ek detaylar 🚗
+
+**Veri Pipeline Mimarisi:**
+• Playwright ile stealth mode web scraping
+• Anti-bot korumalarını aşan gelişmiş fingerprinting
+• Günlük otomatik veri güncelleme
+
+**ML Model Detayları:**
+• Feature engineering: marka, model, yıl, km, yakıt tipi, vites, renk, hasar kaydı
+• Gradient Boosting & Random Forest ensemble modelleri
+• Cross-validation ile model doğrulama
+• R² skoru: 0.92+ doğruluk oranı
+
+**Kazık Skoru Algoritması:**
+• 1-10 arası puanlama (10 = çok pahalı)
+• Piyasa ortalaması, medyan ve standart sapma analizi
+• Benzer araç havuzundan istatistiksel karşılaştırma`,
 };
 
 const followUpResponsesEN: Record<string, () => string> = {
@@ -1771,6 +1895,24 @@ Email usually gets the fastest reply!`,
 
 **Self-improvement:**
 Continuous learning through online courses, CTF competitions, and personal projects.`,
+
+  kazikmi: () => `More about Kazıkmı.com 🚗
+
+**Data Pipeline Architecture:**
+• Stealth mode web scraping with Playwright
+• Advanced fingerprinting to bypass anti-bot protections
+• Daily automatic data updates
+
+**ML Model Details:**
+• Feature engineering: brand, model, year, mileage, fuel type, transmission, color, damage history
+• Gradient Boosting & Random Forest ensemble models
+• Cross-validation for model verification
+• R² score: 0.92+ accuracy
+
+**Overpricing Score Algorithm:**
+• Scoring from 1-10 (10 = very expensive)
+• Market average, median, and standard deviation analysis
+• Statistical comparison from similar vehicle pool`,
 };
 
 // ─── Main Export ─────────────────────────────────────────────────────
