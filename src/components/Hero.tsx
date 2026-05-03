@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { getAIResponse, formatMessage, resetConversation } from '../utils/aiService';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,12 +13,33 @@ interface Message {
 const Hero: React.FC = () => {
   const { language, t } = useLanguage();
   
-  const getWelcomeMessage = () => {
+  // Typing animation state
+  const [displayedTitle, setDisplayedTitle] = useState('');
+  const [titleDone, setTitleDone] = useState(false);
+  const fullTitle = portfolioData.title;
+
+  useEffect(() => {
+    setDisplayedTitle('');
+    setTitleDone(false);
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < fullTitle.length) {
+        setDisplayedTitle(fullTitle.substring(0, i + 1));
+        i++;
+      } else {
+        setTitleDone(true);
+        clearInterval(timer);
+      }
+    }, 45);
+    return () => clearInterval(timer);
+  }, [fullTitle]);
+
+  const getWelcomeMessage = useCallback(() => {
     if (language === 'en') {
       return `Hello! 👋 I'm ${portfolioData.firstName}'s AI assistant. You can ask me anything about ${portfolioData.firstName}: experience, projects, skills, contact info and more!`;
     }
     return `Merhaba! 👋 Ben ${portfolioData.firstName}'in AI asistanıyım. Bana ${portfolioData.firstName} hakkında her şeyi sorabilirsiniz: deneyimleri, projeleri, yetenekleri, iletişim bilgileri ve daha fazlası!`;
-  };
+  }, [language]);
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -40,7 +61,7 @@ const Hero: React.FC = () => {
       content: getWelcomeMessage(),
       isUser: false
     }]);
-  }, [language]);
+  }, [language, getWelcomeMessage]);
 
   // Only scroll within chat container, not the whole page
   const scrollToBottom = () => {
@@ -135,11 +156,28 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="hero">
+      {/* Floating particles background */}
+      <div className="particles">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className={`particle particle-${i % 5}`} style={{
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${8 + Math.random() * 12}s`
+          }} />
+        ))}
+      </div>
+
       <div className="hero-content">
-        <div className="hero-text">
-          <h1>{language === 'en' ? 'Hello, I\'m' : 'Merhaba, Ben'} <span className="highlight">{portfolioData.name}</span></h1>
-          <p className="subtitle">{portfolioData.title}</p>
-          <div className="social-links">
+        <div className="hero-text" style={{ animationDelay: '0.1s' }}>
+          <h1 className="fade-in-up">
+            {language === 'en' ? 'Hello, I\'m' : 'Merhaba, Ben'}{' '}
+            <span className="highlight">{portfolioData.name}</span>
+          </h1>
+          <p className="subtitle typing-text fade-in-up" style={{ animationDelay: '0.3s' }}>
+            {displayedTitle}
+            <span className={`typing-cursor ${titleDone ? 'blink' : ''}`}>|</span>
+          </p>
+          <div className="social-links fade-in-up" style={{ animationDelay: '0.5s' }}>
             <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <i className="fab fa-github"></i>
             </a>
