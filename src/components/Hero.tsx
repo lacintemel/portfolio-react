@@ -156,13 +156,20 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="hero">
+      {/* Ambient gradient orbs */}
+      <div className="hero-ambient">
+        <div className="ambient-orb orb-1"></div>
+        <div className="ambient-orb orb-2"></div>
+        <div className="ambient-orb orb-3"></div>
+      </div>
+
       {/* Floating particles background */}
       <div className="particles">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <div key={i} className={`particle particle-${i % 5}`} style={{
             left: `${Math.random() * 100}%`,
             animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${8 + Math.random() * 12}s`
+            animationDuration: `${10 + Math.random() * 15}s`
           }} />
         ))}
       </div>
@@ -177,15 +184,24 @@ const Hero: React.FC = () => {
             {displayedTitle}
             <span className={`typing-cursor ${titleDone ? 'blink' : ''}`}>|</span>
           </p>
-          <div className="social-links fade-in-up" style={{ animationDelay: '0.5s' }}>
-            <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href={portfolioData.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a href={`mailto:${portfolioData.email}`} aria-label="Email">
-              <i className="fas fa-envelope"></i>
+          <div className="hero-actions fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="social-links">
+              <a href={portfolioData.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <i className="fab fa-github"></i>
+              </a>
+              <a href={portfolioData.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <i className="fab fa-linkedin"></i>
+              </a>
+              <a href={portfolioData.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href={`mailto:${portfolioData.email}`} aria-label="Email">
+                <i className="fas fa-envelope"></i>
+              </a>
+            </div>
+            <a href="#contact" className="hero-cta">
+              <i className="fas fa-paper-plane"></i>
+              {language === 'en' ? 'Get in Touch' : 'İletişime Geç'}
             </a>
           </div>
         </div>
