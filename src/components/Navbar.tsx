@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useActiveSection } from '../hooks/useScrollReveal';
 import '../styles/Navbar.css';
 
+const sectionIds = ['home', 'about', 'featured', 'projects', 'skills', 'contact'];
+
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const activeSection = useActiveSection(sectionIds);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -19,16 +32,21 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-container">
         <a href="#home" className="logo">LT</a>
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-          <li><a href="#home" onClick={closeMenu}>{t('nav.home')}</a></li>
-          <li><a href="#about" onClick={closeMenu}>{t('nav.about')}</a></li>
-          <li><a href="#featured" onClick={closeMenu}>{t('nav.featured')}</a></li>
-          <li><a href="#projects" onClick={closeMenu}>{t('nav.projects')}</a></li>
-          <li><a href="#skills" onClick={closeMenu}>{t('nav.skills')}</a></li>
-          <li><a href="#contact" onClick={closeMenu}>{t('nav.contact')}</a></li>
+          {sectionIds.map((id) => (
+            <li key={id}>
+              <a
+                href={`#${id}`}
+                onClick={closeMenu}
+                className={activeSection === id ? 'active' : ''}
+              >
+                {t(`nav.${id === 'featured' ? 'featured' : id}`)}
+              </a>
+            </li>
+          ))}
         </ul>
         <div className="nav-right">
           <button className="language-switcher" onClick={toggleLanguage} aria-label="Change language">
