@@ -1,10 +1,13 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
+import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
 import '../styles/Skills.css';
 
 const Skills: React.FC = () => {
   const { language, t } = useLanguage();
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  const { ref: gridRef, isVisible: gridVisible, getDelay } = useStaggerReveal(7, { threshold: 0.1 });
 
   const skillCategories = [
     {
@@ -47,12 +50,21 @@ const Skills: React.FC = () => {
   return (
     <section id="skills" className="skills">
       <div className="container">
-        <h2 className="section-title">{t('skills.title')}</h2>
-        <div className="skills-grid">
+        <div ref={headerRef} className={`reveal ${headerVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">{t('skills.title')}</h2>
+        </div>
+        
+        <div ref={gridRef} className="skills-grid">
           {skillCategories.map((category, index) => (
-            <div className="skill-category" key={index}>
+            <div 
+              className={`skill-category reveal-child ${gridVisible ? 'visible' : ''}`} 
+              key={index}
+              style={getDelay(index)}
+            >
               <h3>
-                <i className={`fas ${category.icon}`}></i>
+                <div className="icon-wrapper">
+                  <i className={`fas ${category.icon}`}></i>
+                </div>
                 {category.title}
               </h3>
               <div className="skill-items">
