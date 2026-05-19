@@ -6,6 +6,7 @@ export interface Project {
   github: string;
   icon: string;
   image?: string;
+  categories: string[];
 }
 
 export interface Experience {
@@ -135,7 +136,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["Python", "Playwright", "Pandas", "scikit-learn", "Supabase", "React", "TypeScript"],
       github: "https://github.com/lacintemel/kazikmi",
       icon: "chart-bar",
-      image: "/images/kazikmi.png"
+      image: "/images/kazikmi.png",
+      categories: ["Web", "AI"]
     },
     {
       name: "InterviewAI",
@@ -144,7 +146,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["Python", "CustomTkinter", "Sentence Transformers", "KeyBERT", "NLP"],
       github: "https://github.com/lacintemel/InterviewAI",
       icon: "brain",
-      image: "/images/InterviewAi.png"
+      image: "/images/InterviewAi.png",
+      categories: ["Desktop", "AI"]
     },
     {
       name: "PayMaki",
@@ -153,7 +156,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "Vite", "TailwindCSS", "Supabase", "PostgreSQL"],
       github: "https://github.com/lacintemel/PayMaki",
       icon: "users",
-      image: "/images/logo_PayMaki.png"
+      image: "/images/logo_PayMaki.png",
+      categories: ["Web"]
     },
     {
       name: "ThatTicket.com",
@@ -162,7 +166,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["Java", "Swing", "SQLite", "Maven", "Design Patterns"],
       github: "https://github.com/lacintemel/ThatTicket.com",
       icon: "ticket",
-      image: "/images/ThatTicketcom.png"
+      image: "/images/ThatTicketcom.png",
+      categories: ["Desktop"]
     },
     {
       name: "MSRS - Municipal Service Request System",
@@ -171,7 +176,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["TypeScript", "React", "Node.js", "MongoDB", "Socket.io"],
       github: "https://github.com/lacintemel/munucipality",
       icon: "city",
-      image: "/images/Munucipality.png"
+      image: "/images/Munucipality.png",
+      categories: ["Web"]
     },
     {
       name: "Gayrimenkul Merkezim",
@@ -180,7 +186,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "Vite", "TailwindCSS", "Lucide Icons"],
       github: "https://github.com/lacintemel/Gayrimenkul_Merkezim",
       icon: "home",
-      image: "/images/GayrimenkulMerkezim.png"
+      image: "/images/GayrimenkulMerkezim.png",
+      categories: ["Web"]
     },
     {
       name: "Sobutay Ticaret",
@@ -189,7 +196,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "TypeScript", "TailwindCSS"],
       github: "https://github.com/lacintemel/SobutayTicaret",
       icon: "briefcase",
-      image: "/images/SobutayTicaret.png"
+      image: "/images/SobutayTicaret.png",
+      categories: ["Web"]
     },
     {
       name: "Gelatte",
@@ -198,7 +206,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "TypeScript", "TailwindCSS", "Context API"],
       github: "https://github.com/lacintemel/Gelatte",
       icon: "shopping-cart",
-      image: "/images/gelatte.png"
+      image: "/images/gelatte.png",
+      categories: ["Web"]
     },
     {
       name: "Tufan Design",
@@ -207,7 +216,8 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
       github: "https://github.com/lacintemel/Tufan-design",
       icon: "building",
-      image: "/images/TufanDesign.png"
+      image: "/images/TufanDesign.png",
+      categories: ["Web"]
     }
   ],
 
