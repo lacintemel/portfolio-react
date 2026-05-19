@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { portfolioData, Project } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
+import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
 import '../styles/Projects.css';
 
 const iconMap: Record<string, string> = {
@@ -25,31 +26,64 @@ const projectDescriptionsEN: Record<string, string> = {
   'PayMaki': 'Modern Human Resources Management System',
   'ThatTicket.com': 'Java Swing ticket reservation system',
   'MSRS - Municipal Service Request System': 'Municipal service request system',
-  'Gayrimenkul Merkezim': 'Management portal for apartment residents'
+  'Gayrimenkul Merkezim': 'Management portal for apartment residents',
+  'Sobutay Ticaret': 'Corporate website',
+  'Gelatte': 'Multi-language luxury e-commerce platform',
+  'Tufan Design': 'Luxury architecture portfolio website'
 };
+
+const CATEGORIES = ['All', 'Web', 'AI', 'Desktop', 'Security'];
 
 const Projects: React.FC = () => {
   const { language, t } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeCategory, setActiveCategory] = useState('All');
+  
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  // Determine how many projects match to set staggered animation
+  const filteredProjects = useMemo(() => {
+    return activeCategory === 'All' 
+      ? portfolioData.projects 
+      : portfolioData.projects.filter(p => p.categories?.includes(activeCategory));
+  }, [activeCategory]);
+
+  const { ref: gridRef, isVisible: gridVisible, getDelay } = useStaggerReveal(filteredProjects.length, { threshold: 0.1 });
 
   return (
     <section id="projects" className="projects">
       <div className="container">
-        <h2 className="section-title">{t('projects.title')}</h2>
-        <div className="projects-grid">
-          {portfolioData.projects.map((project, index) => (
-            <div className="project-card" key={index} onClick={() => setSelectedProject(project)} style={{ cursor: 'pointer' }}>
+        <div ref={headerRef} className={`reveal ${headerVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">
+            {t('projects.title')}
+            <span className="project-count">{filteredProjects.length}</span>
+          </h2>
+          
+          <div className="project-filters">
+            {CATEGORIES.map(category => (
+              <button 
+                key={category}
+                className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
+                onClick={() => setActiveCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div ref={gridRef} className="projects-grid">
+          {filteredProjects.map((project, index) => (
+            <div 
+              className={`project-card reveal-child ${gridVisible ? 'visible' : ''}`} 
+              key={`${project.name}-${index}`} 
+              onClick={() => setSelectedProject(project)}
+              style={getDelay(index)}
+            >
               <div className="project-image">
                 <div className="project-overlay">
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="project-link"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <i className="fab fa-github"></i>
-                  </a>
+                  <span className="view-details">
+                    <i className="fas fa-expand"></i>
+                  </span>
                 </div>
                 {project.image ? (
                   <img 
@@ -67,14 +101,39 @@ const Projects: React.FC = () => {
                 <div className="project-icon" style={{ display: project.image ? 'none' : 'flex' }}>
                   <i className={`fas ${iconMap[project.icon] || 'fa-code'}`}></i>
                 </div>
+                <div className="project-category-badges">
+                  {project.categories?.map((cat, i) => (
+                    <span key={i} className="cat-badge">{cat}</span>
+                  ))}
+                </div>
               </div>
+              
               <div className="project-info">
                 <h3>{project.name}</h3>
                 <p>{language === 'en' ? (projectDescriptionsEN[project.name] || project.description) : project.description}</p>
                 <div className="project-tags">
-                  {project.technologies.map((tech, techIndex) => (
+                  {project.technologies.slice(0, 4).map((tech, techIndex) => (
                     <span className="tag" key={techIndex}>{tech}</span>
                   ))}
+                  {project.technologies.length > 4 && (
+                    <span className="tag extra">+{project.technologies.length - 4}</span>
+                  )}
+                </div>
+                
+                <div className="project-card-actions">
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="card-action-btn github"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <i className="fab fa-github"></i> Source
+                  </a>
+                  {/* Assuming liveUrl exists in Project type, though currently not in all data */}
+                  <button className="card-action-btn details" onClick={() => setSelectedProject(project)}>
+                    <i className="fas fa-info-circle"></i> Details
+                  </button>
                 </div>
               </div>
             </div>
@@ -106,20 +165,22 @@ const Projects: React.FC = () => {
               <p className="project-modal-long-description">
                 {selectedProject.longDescription}
               </p>
-              <div className="project-tags" style={{ marginBottom: '20px' }}>
+              <div className="project-tags" style={{ marginBottom: '24px' }}>
                 {selectedProject.technologies.map((tech, techIndex) => (
                   <span className="tag" key={techIndex}>{tech}</span>
                 ))}
               </div>
-              <a 
-                href={selectedProject.github} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="project-modal-btn"
-              >
-                <i className="fab fa-github" style={{ marginRight: '8px' }}></i>
-                {language === 'en' ? 'View Source' : 'Kaynak Kodu Gör'}
-              </a>
+              <div className="modal-action-buttons">
+                <a 
+                  href={selectedProject.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="project-modal-btn github"
+                >
+                  <i className="fab fa-github"></i>
+                  {language === 'en' ? 'View Source Code' : 'Kaynak Kodunu Gör'}
+                </a>
+              </div>
             </div>
           </div>
         </div>
