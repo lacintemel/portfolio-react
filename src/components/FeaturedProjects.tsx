@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
 import '../styles/FeaturedProjects.css';
 
 interface Screenshot {
@@ -94,6 +95,9 @@ const FeaturedProjects: React.FC = () => {
   const { language, t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<Screenshot | null>(null);
 
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  const { ref: listRef, isVisible: listVisible, getDelay } = useStaggerReveal(featuredProjects.length, { threshold: 0.1 });
+
   const openLightbox = (screenshot: Screenshot) => {
     setSelectedImage(screenshot);
     document.body.style.overflow = 'hidden';
@@ -107,15 +111,21 @@ const FeaturedProjects: React.FC = () => {
   return (
     <section id="featured" className="featured-projects">
       <div className="container">
-        <h2 className="section-title">
-          <span className="star-icon">⭐</span>
-          {t('featured.title')}
-        </h2>
-        <p className="section-subtitle">{t('featured.subtitle')}</p>
+        <div ref={headerRef} className={`reveal ${headerVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">
+            <span className="star-icon">⭐</span>
+            {t('featured.title')}
+          </h2>
+          <p className="section-subtitle">{t('featured.subtitle')}</p>
+        </div>
         
-        <div className="featured-grid">
+        <div ref={listRef} className="featured-grid">
           {featuredProjects.map((project, index) => (
-            <div className="featured-card" key={index}>
+            <div 
+              className={`featured-card reveal-child ${listVisible ? 'visible' : ''}`} 
+              key={index}
+              style={getDelay(index)}
+            >
               {project.comingSoon && (
                 <div className="coming-soon-badge">
                   <span>{t('featured.comingSoon')}</span>
