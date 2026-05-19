@@ -1,10 +1,13 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
+import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
 import '../styles/About.css';
 
 const About: React.FC = () => {
   const { language, t } = useLanguage();
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollReveal();
+  const { ref: statsRef, isVisible: statsVisible, getDelay } = useStaggerReveal(3, { threshold: 0.2 });
 
   const bioTextEn = [
     "I'm a passionate professional committed to building a career in cybersecurity. I'm a fast learner with a team-oriented and collaborative approach.",
@@ -20,33 +23,39 @@ const About: React.FC = () => {
 
   const bioText = language === 'en' ? bioTextEn : bioTextTr;
 
+  const stats = [
+    { number: portfolioData.stats.projects, label: language === 'en' ? 'Projects' : 'Proje' },
+    { number: portfolioData.stats.contributions, label: language === 'en' ? 'GitHub Contributions' : 'GitHub Katkısı' },
+    { number: portfolioData.stats.technologies, label: language === 'en' ? 'Technologies' : 'Teknoloji' },
+  ];
+
   return (
     <section id="about" className="about">
       <div className="container">
-        <h2 className="section-title">{t('about.title')}</h2>
+        <div ref={sectionRef} className={`reveal ${sectionVisible ? 'visible' : ''}`}>
+          <h2 className="section-title">{t('about.title')}</h2>
+        </div>
         <div className="about-content">
           <div className="about-image">
-            <div className="image-frame">
+            <div className={`image-frame reveal-scale ${sectionVisible ? 'visible' : ''}`}>
               <img src={portfolioData.avatar} alt={portfolioData.name} />
             </div>
           </div>
-          <div className="about-text">
+          <div className={`about-text reveal ${sectionVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.15s' }}>
             {bioText.map((text, index) => (
               <p key={index}>{text}</p>
             ))}
-            <div className="stats">
-              <div className="stat-item">
-                <span className="stat-number">{portfolioData.stats.projects}</span>
-                <span className="stat-label">{language === 'en' ? 'Projects' : 'Proje'}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">{portfolioData.stats.contributions}</span>
-                <span className="stat-label">{language === 'en' ? 'GitHub Contributions' : 'GitHub Katkısı'}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">{portfolioData.stats.technologies}</span>
-                <span className="stat-label">{language === 'en' ? 'Technologies' : 'Teknoloji'}</span>
-              </div>
+            <div ref={statsRef} className="stats">
+              {stats.map((stat, index) => (
+                <div
+                  className={`stat-item reveal-child ${statsVisible ? '' : ''}`}
+                  key={index}
+                  style={getDelay(index)}
+                >
+                  <span className="stat-number">{stat.number}</span>
+                  <span className="stat-label">{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
