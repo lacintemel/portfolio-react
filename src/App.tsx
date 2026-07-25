@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import InteractiveLab from './components/InteractiveLab';
 import About from './components/About';
 import Experience from './components/Experience';
 import FeaturedProjects from './components/FeaturedProjects';
@@ -31,6 +32,7 @@ function App() {
       <div className="App">
         <Navbar />
         <Hero />
+        <InteractiveLab />
         <About />
         <Experience />
         <FeaturedProjects />

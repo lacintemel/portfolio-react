@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useActiveSection } from '../hooks/useScrollReveal';
 import '../styles/Navbar.css';
 
-const sectionIds = ['home', 'about', 'experience', 'featured', 'projects', 'skills', 'contact'];
+const sectionIds = ['home', 'lab', 'about', 'experience', 'featured', 'projects', 'skills', 'contact'];
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
