@@ -137,6 +137,45 @@ section {
   position: relative;
 }
 
+/* ===== Pointer-aware 3D surfaces ===== */
+.tilt-scene {
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+.tilt-surface-inner {
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 140ms ease-out;
+  will-change: transform;
+}
+
+.tilt-scene:hover .tilt-surface-inner {
+  transition-duration: 60ms;
+}
+
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.13),
+    rgba(52, 211, 153, 0.04) 26%,
+    transparent 58%
+  );
+  transition: opacity var(--transition-fast);
+}
+
+.tilt-scene:hover .tilt-glare {
+  opacity: 1;
+}
+
 /* ===== Scroll Reveal Animations ===== */
 .reveal {
   opacity: 0;
@@ -253,5 +292,17 @@ section {
 @media (max-width: 480px) {
   .section-title {
     font-size: 1.75rem;
+  }
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .tilt-surface-inner,
+  .tilt-scene:hover .tilt-surface-inner {
+    transform: none;
+    transition: none;
+  }
+
+  .tilt-glare {
+    display: none;
   }
 }
