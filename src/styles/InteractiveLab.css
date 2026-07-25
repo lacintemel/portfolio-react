@@ -191,7 +191,7 @@
   background: rgba(4, 6, 8, 0.72);
   color: rgba(255, 255, 255, 0.35);
   font-family: 'Courier New', monospace;
-  font-size: 0.64rem;
+  font-size: 0.56rem;
   letter-spacing: 0.14em;
   display: flex;
   align-items: center;
@@ -479,6 +479,83 @@
   background: linear-gradient(135deg, rgba(52, 211, 153, 0.13), transparent 62%);
   backdrop-filter: blur(4px);
   transition: opacity 400ms ease, transform 950ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: rgba(110, 231, 183, 0.82);
+  font-family: 'Courier New', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.shield-panel small {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.45rem;
+  letter-spacing: 0.12em;
+}
+
+.moda-file-card,
+.moda-risk-card {
+  position: absolute;
+  z-index: 12;
+  opacity: 0;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  background: rgba(3, 15, 12, 0.86);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35), inset 0 0 20px rgba(52, 211, 153, 0.08);
+  color: #6ee7b7;
+  font-family: 'Courier New', monospace;
+  transition: opacity 450ms ease, transform 950ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.moda-file-card {
+  left: 7%;
+  top: 21%;
+  width: 126px;
+  min-height: 92px;
+  padding: 14px;
+  border-radius: 13px;
+  transform: translate3d(-150px, -40px, -50px) rotateY(50deg);
+}
+
+.moda-file-card i {
+  display: block;
+  margin-bottom: 8px;
+  color: #60a5fa;
+  font-size: 1.45rem;
+}
+
+.moda-file-card span,
+.moda-file-card small { display: block; }
+.moda-file-card span { color: var(--text-primary); font-size: 0.65rem; }
+.moda-file-card small { margin-top: 3px; color: #fb7185; font-size: 0.46rem; }
+
+.moda-risk-card {
+  right: 7%;
+  top: 22%;
+  width: 118px;
+  min-height: 92px;
+  padding: 13px;
+  border-radius: 13px;
+  text-align: center;
+  transform: translate3d(150px, -40px, -50px) rotateY(-50deg);
+}
+
+.moda-risk-card span,
+.moda-risk-card small { color: rgba(255, 255, 255, 0.45); font-size: 0.48rem; }
+.moda-risk-card strong { margin-left: 4px; color: #fb7185; font-size: 2rem; line-height: 1.8; }
+
+.lab-mode-security .moda-file-card {
+  opacity: 1;
+  transform: translate3d(16px, 0, 70px) rotateY(14deg);
+}
+
+.lab-mode-security .moda-risk-card {
+  opacity: 1;
+  transform: translate3d(-16px, 0, 70px) rotateY(-14deg);
 }
 
 .shield-panel-left {
@@ -630,6 +707,24 @@
   background: #a78bfa;
 }
 
+.neural-node small {
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  padding: 3px 6px;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  border-radius: 5px;
+  background: rgba(9, 6, 15, 0.82);
+  color: #c4b5fd;
+  font-family: 'Courier New', monospace;
+  font-size: 0.47rem;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  white-space: nowrap;
+  transform: translateX(-50%) translateY(6px);
+  transition: opacity 400ms ease 850ms, transform 500ms ease 850ms;
+}
+
 .lab-mode-ai .neural-node {
   opacity: 1;
   border-color: rgba(196, 181, 253, 0.9);
@@ -639,6 +734,7 @@
 }
 
 .lab-mode-ai .neural-node::before { opacity: 1; }
+.lab-mode-ai .neural-node small { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 .neural-rings {
   position: absolute;
@@ -664,12 +760,62 @@
 .neural-rings i:nth-child(2) { transform: rotate(60deg); animation-direction: reverse; }
 .neural-rings i:nth-child(3) { transform: rotate(-60deg); animation-duration: 7s; }
 
+.portfolio-preview-system {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.portfolio-preview {
+  position: absolute;
+  width: 148px;
+  height: 92px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 10px;
+  background: #0c0912;
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.42), 0 0 24px rgba(139, 92, 246, 0.12);
+  opacity: 0;
+  transition: opacity 550ms ease, transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.76;
+}
+
+.portfolio-preview figcaption {
+  position: absolute;
+  left: 7px;
+  bottom: 6px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  background: rgba(5, 3, 9, 0.8);
+  color: #ddd6fe;
+  font-size: 0.54rem;
+  font-weight: 700;
+}
+
+.preview-paymaki { left: 2%; top: 42%; transform: translate3d(-180px, 30px, -80px) rotateY(45deg) rotateZ(-8deg); }
+.preview-kazikmi { right: 2%; top: 43%; transform: translate3d(180px, 30px, -80px) rotateY(-45deg) rotateZ(8deg); }
+.preview-interview { left: 50%; top: 11%; transform: translate3d(-50%, -130px, -90px) rotateX(45deg) scale(0.6); }
+
+.lab-mode-ai .portfolio-preview { opacity: 0.76; }
+.lab-mode-ai .preview-paymaki { transform: translate3d(18px, 0, 44px) rotateY(16deg) rotateZ(-3deg); }
+.lab-mode-ai .preview-kazikmi { transform: translate3d(-18px, 0, 44px) rotateY(-16deg) rotateZ(3deg); }
+.lab-mode-ai .preview-interview { transform: translate3d(-50%, 0, 32px) rotateX(4deg) scale(0.82); }
+
 /* Project assembly transformation */
 .project-level {
   position: absolute;
   left: 50%;
   top: 39%;
-  width: 190px;
+  width: 220px;
   height: 58px;
   padding: 0 18px;
   border: 1px solid rgba(245, 158, 11, 0.26);
@@ -680,7 +826,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   font-weight: 750;
   letter-spacing: 0.1em;
   opacity: 0.18;
@@ -967,6 +1113,12 @@
   .lab-mode-build .lab-console { transform: translate(-50%, -50%) scale(0.74); }
   .wall-display { width: 110px; height: 68px; padding: 9px; font-size: 0.5rem; }
   .shield-panel { display: none; }
+  .moda-file-card,
+  .moda-risk-card { transform: scale(0.72); }
+  .lab-mode-security .moda-file-card { left: 0; transform: translate3d(0, 0, 45px) scale(0.72) rotateY(10deg); }
+  .lab-mode-security .moda-risk-card { right: 0; transform: translate3d(0, 0, 45px) scale(0.72) rotateY(-10deg); }
+  .portfolio-preview { width: 106px; height: 68px; }
+  .preview-interview { display: none; }
   .lab-mode-build .project-level:nth-child(2) { transform: translate3d(-50%, 96px, 0) rotateX(58deg) rotateZ(-42deg) scale(0.8); }
   .lab-mode-build .project-level:nth-child(3) { transform: translate3d(-50%, 52px, 24px) rotateX(58deg) rotateZ(-42deg) scale(0.8); }
   .lab-mode-build .project-level:nth-child(4) { transform: translate3d(-50%, 8px, 48px) rotateX(58deg) rotateZ(-42deg) scale(0.8); }

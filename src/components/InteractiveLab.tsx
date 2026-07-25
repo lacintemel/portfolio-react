@@ -15,17 +15,17 @@ interface ModeCopy {
 
 type SceneStyle = CSSProperties & Record<`--${string}`, string | number>;
 
-const projectLevels = ['MODA', 'KAZIKMI', 'PAYMAKI', 'INTERVIEW AI'];
+const careerLevels = ['EGE ÜNİVERSİTESİ', 'VULNERDAY', 'İŞ BANKASI', 'LAÇİN TEMEL'];
 
 const neuralNodes = [
-  { idleX: '-280px', idleY: '-110px', aiX: '-165px', aiY: '-86px', delay: '0s' },
-  { idleX: '250px', idleY: '-120px', aiX: '0px', aiY: '-126px', delay: '.15s' },
-  { idleX: '-245px', idleY: '105px', aiX: '165px', aiY: '-86px', delay: '.3s' },
-  { idleX: '285px', idleY: '110px', aiX: '185px', aiY: '66px', delay: '.45s' },
-  { idleX: '-80px', idleY: '165px', aiX: '0px', aiY: '125px', delay: '.6s' },
-  { idleX: '75px', idleY: '-175px', aiX: '-185px', aiY: '66px', delay: '.75s' },
-  { idleX: '-330px', idleY: '10px', aiX: '-82px', aiY: '8px', delay: '.9s' },
-  { idleX: '330px', idleY: '-10px', aiX: '82px', aiY: '8px', delay: '1.05s' }
+  { label: 'MODA', idleX: '-280px', idleY: '-110px', aiX: '-165px', aiY: '-86px', delay: '0s' },
+  { label: 'InterviewAI', idleX: '250px', idleY: '-120px', aiX: '0px', aiY: '-126px', delay: '.15s' },
+  { label: 'Kazıkmı', idleX: '-245px', idleY: '105px', aiX: '165px', aiY: '-86px', delay: '.3s' },
+  { label: 'PayMaki', idleX: '285px', idleY: '110px', aiX: '185px', aiY: '66px', delay: '.45s' },
+  { label: 'Portfolio AI', idleX: '-80px', idleY: '165px', aiX: '0px', aiY: '125px', delay: '.6s' },
+  { label: 'Security', idleX: '75px', idleY: '-175px', aiX: '-185px', aiY: '66px', delay: '.75s' },
+  { label: 'Python', idleX: '-330px', idleY: '10px', aiX: '-82px', aiY: '8px', delay: '.9s' },
+  { label: 'React', idleX: '330px', idleY: '-10px', aiX: '82px', aiY: '8px', delay: '1.05s' }
 ];
 
 const InteractiveLab: React.FC = () => {
@@ -36,58 +36,58 @@ const InteractiveLab: React.FC = () => {
 
   const modeCopy: Record<Exclude<LabMode, 'idle'>, ModeCopy> = language === 'en' ? {
     security: {
-      title: 'Defend the system',
-      shortTitle: 'Security Scan',
-      description: 'The lab lights switch to defense mode, the shield assembles, and a live threat scan begins.',
-      status: 'THREAT SCAN ACTIVE',
+      title: 'Analyze a malicious document with MODA',
+      shortTitle: 'MODA Analysis',
+      description: 'A suspicious Office document is separated into OOXML/OLE, macro, IOC, and YARA layers before receiving a risk score.',
+      status: 'MODA STATIC ANALYSIS',
       icon: 'fa-shield-alt'
     },
     ai: {
-      title: 'Activate the intelligence network',
-      shortTitle: 'AI Network',
-      description: 'Scattered data points connect around the model core and become an active neural network.',
-      status: 'NEURAL CORE ONLINE',
+      title: 'Connect Laçin\'s project ecosystem',
+      shortTitle: 'Project Network',
+      description: 'MODA, InterviewAI, Kazıkmı, PayMaki, and Portfolio AI connect through their shared Python, React, AI, and security stack.',
+      status: 'LAÇİN / PROJECT NETWORK',
       icon: 'fa-brain'
     },
     build: {
-      title: 'Build the portfolio',
-      shortTitle: 'Build Projects',
-      description: 'Independent projects move into place and assemble into one layered digital structure.',
-      status: 'PORTFOLIO ASSEMBLED',
+      title: 'Build the career journey',
+      shortTitle: 'Career Journey',
+      description: 'Ege University, Vulnerday, and Türkiye İş Bankası come together as the layers shaping Laçin\'s cybersecurity career.',
+      status: 'CAREER PATH ASSEMBLED',
       icon: 'fa-cubes'
     }
   } : {
     security: {
-      title: 'Sistemi savun',
-      shortTitle: 'Güvenlik Taraması',
-      description: 'Laboratuvar ışıkları savunma moduna geçer, kalkan parçaları birleşir ve canlı tehdit taraması başlar.',
-      status: 'TEHDİT TARAMASI AKTİF',
+      title: 'MODA ile zararlı belgeyi analiz et',
+      shortTitle: 'MODA Analizi',
+      description: 'Şüpheli Office belgesi OOXML/OLE, makro, IOC ve YARA katmanlarına ayrılır; ardından risk puanı oluşturulur.',
+      status: 'MODA STATİK ANALİZ',
       icon: 'fa-shield-alt'
     },
     ai: {
-      title: 'Zekâ ağını etkinleştir',
-      shortTitle: 'AI Ağı',
-      description: 'Dağınık veri noktaları model çekirdeğinin etrafında bağlanarak aktif bir sinir ağına dönüşür.',
-      status: 'YAPAY ZEKÂ ÇEKİRDEĞİ AKTİF',
+      title: 'Laçin\'in proje ekosistemini bağla',
+      shortTitle: 'Proje Ağı',
+      description: 'MODA, InterviewAI, Kazıkmı, PayMaki ve Portfolio AI; Python, React, AI ve güvenlik teknolojileri üzerinden birbirine bağlanır.',
+      status: 'LAÇİN / PROJE AĞI',
       icon: 'fa-brain'
     },
     build: {
-      title: 'Portfolyoyu inşa et',
-      shortTitle: 'Projeleri İnşa Et',
-      description: 'Bağımsız projeler yerlerine hareket ederek katmanlı tek bir dijital yapıda birleşir.',
-      status: 'PORTFOLYO YAPISI TAMAMLANDI',
+      title: 'Kariyer yolculuğunu inşa et',
+      shortTitle: 'Kariyer Yolculuğu',
+      description: 'Ege Üniversitesi, Vulnerday ve Türkiye İş Bankası; Laçin\'in siber güvenlik kariyerini oluşturan katmanlar olarak birleşir.',
+      status: 'KARİYER YOLU TAMAMLANDI',
       icon: 'fa-cubes'
     }
   };
 
   const idleCopy = language === 'en' ? {
-    title: 'Digital Lab waiting',
-    description: 'Hover over a mode or select it to transform the scene.',
-    status: 'SYSTEM IDLE'
+    title: 'Laçin\'s portfolio is ready',
+    description: 'Choose a real project or career story to transform the scene.',
+    status: 'LAÇİN TEMEL / PORTFOLIO'
   } : {
-    title: 'Dijital laboratuvar beklemede',
-    description: 'Sahneyi dönüştürmek için bir modun üzerine gel veya seç.',
-    status: 'SİSTEM BEKLEMEDE'
+    title: 'Laçin\'in portfolyosu hazır',
+    description: 'Sahneyi dönüştürmek için gerçek bir proje veya kariyer hikâyesi seç.',
+    status: 'LAÇİN TEMEL / PORTFOLYO'
   };
 
   const activeCopy = mode === 'idle' ? idleCopy : modeCopy[mode];
@@ -114,12 +114,12 @@ const InteractiveLab: React.FC = () => {
       <div className="lab-background-grid" aria-hidden="true" />
       <div className="container">
         <header className={`lab-intro reveal ${isVisible ? 'visible' : ''}`}>
-          <span className="section-kicker">{language === 'en' ? 'Interactive 3D Experience' : 'Etkileşimli 3D Deneyim'}</span>
-          <h2 className="section-title">{language === 'en' ? 'Digital Security Lab' : 'Dijital Güvenlik Laboratuvarı'}</h2>
+          <span className="section-kicker">{language === 'en' ? 'Laçin Temel / Interactive Story' : 'Laçin Temel / Etkileşimli Hikâye'}</span>
+          <h2 className="section-title">{language === 'en' ? 'Explore My Digital Journey' : 'Dijital Yolculuğumu Keşfet'}</h2>
           <p>
             {language === 'en'
-              ? 'Move your pointer over a mode. Watch the same workspace transform for security, AI, and software development.'
-              : 'Bir modun üzerine gel. Aynı çalışma alanının siber güvenlik, AI ve yazılım geliştirme için nasıl dönüştüğünü izle.'}
+              ? 'Explore how my projects, technologies, and career milestones connect by moving over the three stories below.'
+              : 'Aşağıdaki üç hikâyenin üzerine gelerek projelerimin, teknolojilerimin ve kariyer adımlarımın nasıl bağlandığını keşfet.'}
           </p>
         </header>
 
@@ -136,11 +136,11 @@ const InteractiveLab: React.FC = () => {
                 <span className="wall-light wall-light-left" />
                 <span className="wall-light wall-light-right" />
                 <div className="wall-display wall-display-left">
-                  <span>LT / LAB</span>
+                  <span>LAÇİN / PORTFOLIO</span>
                   <i className="fas fa-fingerprint" />
                 </div>
                 <div className="wall-display wall-display-right">
-                  <span>LIVE SYSTEM</span>
+                  <span>CYBER · AI · SOFTWARE</span>
                   <span className="display-bars"><i /><i /><i /><i /></span>
                 </div>
               </div>
@@ -155,7 +155,7 @@ const InteractiveLab: React.FC = () => {
                     <span>{activeCopy.status}</span>
                   </div>
                   <div className="screen-symbol">
-                    <i className={`fas ${mode === 'security' ? 'fa-shield-alt' : mode === 'ai' ? 'fa-brain' : mode === 'build' ? 'fa-cubes' : 'fa-terminal'}`} />
+                    <i className={`fas ${mode === 'security' ? 'fa-file-shield' : mode === 'ai' ? 'fa-diagram-project' : mode === 'build' ? 'fa-briefcase' : 'fa-terminal'}`} />
                   </div>
                   <div className="screen-readout"><i /><i /><i /><i /><i /></div>
                 </div>
@@ -169,11 +169,21 @@ const InteractiveLab: React.FC = () => {
             </div>
 
             <div className="security-system" aria-hidden="true">
+              <div className="moda-file-card">
+                <i className="fas fa-file-word" />
+                <span>sample.docm</span>
+                <small>MACRO ENABLED</small>
+              </div>
+              <div className="moda-risk-card">
+                <span>MODA RISK</span>
+                <strong>87</strong>
+                <small>/ 100</small>
+              </div>
               <div className="security-orbit orbit-one" />
               <div className="security-orbit orbit-two" />
-              <div className="shield-panel shield-panel-left" />
+              <div className="shield-panel shield-panel-left"><span>OOXML · OLE</span><small>STRUCTURE</small></div>
               <div className="shield-core"><i className="fas fa-shield-alt" /></div>
-              <div className="shield-panel shield-panel-right" />
+              <div className="shield-panel shield-panel-right"><span>IOC · YARA</span><small>INTELLIGENCE</small></div>
               <div className="scan-beam" />
               {Array.from({ length: 5 }).map((_, index) => (
                 <span className={`threat-point threat-${index + 1}`} key={index}><i className="fas fa-bug" /></span>
@@ -181,7 +191,7 @@ const InteractiveLab: React.FC = () => {
             </div>
 
             <div className="neural-system" aria-hidden="true">
-              <div className="neural-core"><span>AI</span><i /><i /><i /></div>
+              <div className="neural-core"><span>LT</span><i /><i /><i /></div>
               <div className="neural-rings"><i /><i /><i /></div>
               {neuralNodes.map((node, index) => (
                 <span
@@ -196,20 +206,36 @@ const InteractiveLab: React.FC = () => {
                   } as SceneStyle}
                 >
                   <i />
+                  <small>{node.label}</small>
                 </span>
               ))}
             </div>
 
+            <div className="portfolio-preview-system" aria-hidden="true">
+              <figure className="portfolio-preview preview-paymaki">
+                <img src={`${process.env.PUBLIC_URL || ''}/images/PayMaki4.png`} alt="" />
+                <figcaption>PayMaki</figcaption>
+              </figure>
+              <figure className="portfolio-preview preview-kazikmi">
+                <img src={`${process.env.PUBLIC_URL || ''}/images/kazikmi.png`} alt="" />
+                <figcaption>Kazıkmı.com</figcaption>
+              </figure>
+              <figure className="portfolio-preview preview-interview">
+                <img src={`${process.env.PUBLIC_URL || ''}/images/InterviewAi.png`} alt="" />
+                <figcaption>InterviewAI</figcaption>
+              </figure>
+            </div>
+
             <div className="project-assembly" aria-hidden="true">
               <div className="assembly-spine" />
-              {projectLevels.map((project, index) => (
+              {careerLevels.map((project, index) => (
                 <div
                   className="project-level"
                   key={project}
                   style={{ '--level': index } as SceneStyle}
                 >
                   <span>{project}</span>
-                  <i className={index === 0 ? 'fas fa-shield-alt' : index === 1 ? 'fas fa-chart-line' : index === 2 ? 'fas fa-users' : 'fas fa-brain'} />
+                  <i className={index === 0 ? 'fas fa-graduation-cap' : index === 1 ? 'fas fa-user-secret' : index === 2 ? 'fas fa-building-columns' : 'fas fa-fingerprint'} />
                 </div>
               ))}
               <div className="assembly-beacon"><i className="fas fa-code" /></div>

@@ -143,7 +143,7 @@ const FeaturedProjects: React.FC = () => {
                       <img 
                         src={`${process.env.PUBLIC_URL || ''}${screenshot.src}`} 
                         alt={language === 'en' ? screenshot.titleEn : screenshot.titleTr}
-                        loading="lazy"
+                        loading={index === 0 ? 'eager' : 'lazy'}
                       />
                       <div className="screenshot-overlay">
                         <i className="fas fa-search-plus"></i>

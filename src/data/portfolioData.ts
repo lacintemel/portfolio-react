@@ -175,7 +175,7 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
       technologies: ["React", "Vite", "TailwindCSS", "Supabase", "PostgreSQL"],
       github: "https://github.com/lacintemel/PayMaki",
       icon: "users",
-      image: "/images/logo_PayMaki.png",
+      image: "/images/PayMaki4.png",
       categories: ["Web"]
     },
     {
