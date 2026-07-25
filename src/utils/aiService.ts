@@ -331,19 +331,6 @@ function scoreCategories(question: string, lang: 'tr' | 'en'): ScoredCategory[] 
     .sort((a, b) => b.score - a.score);
 }
 
-function detectCategories(question: string, lang: 'tr' | 'en'): string[] {
-  const scored = scoreCategories(question, lang);
-  if (scored.length === 0) return ['unknown'];
-
-  const topScore = scored[0].score;
-  // Return top category + any category within 40% of top score
-  const threshold = topScore * 0.6;
-  const relevant = scored.filter(s => s.score >= threshold).map(s => s.category);
-
-  // Cap at 3 categories to keep responses focused
-  return relevant.slice(0, 3);
-}
-
 // ─── Response Builder ────────────────────────────────────────────────
 function buildResponse(categories: string[], lang: 'tr' | 'en'): string {
   const responseMap = lang === 'en' ? responsesEN : responses;

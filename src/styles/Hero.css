@@ -351,6 +351,14 @@
   color: var(--text-secondary);
 }
 
+.message-content a {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+  text-decoration-color: rgba(52, 211, 153, 0.4);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
 .message.user .message-content {
   background: var(--accent-gradient);
   border-bottom-right-radius: 4px;
@@ -411,6 +419,19 @@
 
 .chat-input-container input::placeholder {
   color: var(--text-muted);
+}
+
+.chat-input-container input:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.chat-input-container button:disabled,
+.suggestion-btn:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.48;
+  transform: none;
 }
 
 .chat-input-container button {
