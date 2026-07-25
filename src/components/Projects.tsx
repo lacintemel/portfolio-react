@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { portfolioData, Project } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
+import TiltSurface from './TiltSurface';
 import '../styles/Projects.css';
 
 const iconMap: Record<string, string> = {
@@ -17,6 +18,7 @@ const iconMap: Record<string, string> = {
   'building': 'fa-building',
   'shopping-bag': 'fa-shopping-bag',
   'chart-bar': 'fa-chart-bar'
+  ,'shield': 'fa-shield-alt'
 };
 
 // English project descriptions
@@ -30,6 +32,7 @@ const projectDescriptionsEN: Record<string, string> = {
   'Sobutay Ticaret': 'Corporate website',
   'Gelatte': 'Multi-language luxury e-commerce platform',
   'Tufan Design': 'Luxury architecture portfolio website'
+  ,'MODA': 'Static analyzer for malicious Office documents, RTF files, and PDFs'
 };
 
 const CATEGORIES = ['All', 'Web', 'AI', 'Desktop', 'Security'];
@@ -73,13 +76,13 @@ const Projects: React.FC = () => {
 
         <div ref={gridRef} className="projects-grid">
           {filteredProjects.map((project, index) => (
-            <div 
-              className={`project-card reveal-child ${gridVisible ? 'visible' : ''}`} 
+            <TiltSurface
+              className={`reveal-child ${gridVisible ? 'visible' : ''}`}
               key={`${project.name}-${index}`} 
-              onClick={() => setSelectedProject(project)}
               style={getDelay(index)}
             >
-              <div className="project-image">
+              <article className="project-card" onClick={() => setSelectedProject(project)}>
+                <div className="project-image">
                 <div className="project-overlay">
                   <span className="view-details">
                     <i className="fas fa-expand"></i>
@@ -106,9 +109,9 @@ const Projects: React.FC = () => {
                     <span key={i} className="cat-badge">{cat}</span>
                   ))}
                 </div>
-              </div>
+                </div>
               
-              <div className="project-info">
+                <div className="project-info">
                 <h3>{project.name}</h3>
                 <p>{language === 'en' ? (projectDescriptionsEN[project.name] || project.description) : project.description}</p>
                 <div className="project-tags">
@@ -135,8 +138,9 @@ const Projects: React.FC = () => {
                     <i className="fas fa-info-circle"></i> Details
                   </button>
                 </div>
-              </div>
-            </div>
+                </div>
+              </article>
+            </TiltSurface>
           ))}
         </div>
       </div>
