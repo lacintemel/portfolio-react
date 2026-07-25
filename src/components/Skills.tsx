@@ -2,6 +2,7 @@ import React from 'react';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
 import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal';
+import TiltSurface from './TiltSurface';
 import '../styles/Skills.css';
 
 const Skills: React.FC = () => {
@@ -56,25 +57,27 @@ const Skills: React.FC = () => {
         
         <div ref={gridRef} className="skills-grid">
           {skillCategories.map((category, index) => (
-            <div 
-              className={`skill-category reveal-child ${gridVisible ? 'visible' : ''}`} 
+            <TiltSurface
+              className={`reveal-child ${gridVisible ? 'visible' : ''}`}
               key={index}
               style={getDelay(index)}
             >
-              <h3>
-                <div className="icon-wrapper">
-                  <i className={`fas ${category.icon}`}></i>
-                </div>
-                {category.title}
-              </h3>
-              <div className="skill-items">
-                {category.skills.map((skill, skillIndex) => (
-                  <div className="skill-item" key={skillIndex}>
-                    <span>{skill}</span>
+              <article className="skill-category">
+                <h3>
+                  <div className="icon-wrapper">
+                    <i className={`fas ${category.icon}`}></i>
                   </div>
-                ))}
-              </div>
-            </div>
+                  {category.title}
+                </h3>
+                <div className="skill-items">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div className="skill-item" key={skillIndex}>
+                      <span>{skill}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            </TiltSurface>
           ))}
         </div>
       </div>

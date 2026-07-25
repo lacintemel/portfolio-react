@@ -80,12 +80,20 @@
   transition: all var(--transition-medium);
   display: flex;
   flex-direction: column;
+  height: 100%;
+  transform-style: preserve-3d;
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
+  transform: translateZ(22px) translateY(-4px);
   border-color: var(--border-hover);
   box-shadow: var(--shadow-card-hover);
+}
+
+.project-card .project-info,
+.project-card .project-category-badges,
+.project-card .project-icon {
+  transform: translateZ(18px);
 }
 
 .project-image {
