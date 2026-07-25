@@ -1,6 +1,8 @@
-import React, { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { portfolioData } from '../data/portfolioData';
 import '../styles/InteractiveLab.css';
 
 type LabMode = 'idle' | 'security' | 'ai' | 'build';
@@ -31,8 +33,32 @@ const neuralNodes = [
 const InteractiveLab: React.FC = () => {
   const { language } = useLanguage();
   const [mode, setMode] = useState<LabMode>('idle');
+  const [detailMode, setDetailMode] = useState<Exclude<LabMode, 'idle'> | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const { ref: sectionRef, isVisible } = useScrollReveal({ threshold: 0.08 });
+
+  const modaProject = portfolioData.projects.find((project) => project.name === 'MODA')!;
+  const detailProjects = ['MODA', 'PayMaki', 'Kazıkmı.com', 'InterviewAI'].flatMap((name) => {
+    const project = portfolioData.projects.find((item) => item.name === name);
+    return project ? [project] : [];
+  });
+
+  useEffect(() => {
+    if (!detailMode) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setDetailMode(null);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [detailMode]);
 
   const modeCopy: Record<Exclude<LabMode, 'idle'>, ModeCopy> = language === 'en' ? {
     security: {
@@ -253,7 +279,7 @@ const InteractiveLab: React.FC = () => {
           <div className="lab-controls">
             <div className="lab-controls-heading">
               <span>{language === 'en' ? 'SELECT MODE' : 'MOD SEÇ'}</span>
-              <small>{language === 'en' ? 'Hover or click' : 'Üzerine gel veya tıkla'}</small>
+              <small>{language === 'en' ? 'Hover to preview · click for details' : 'Önizleme için üzerine gel · detay için tıkla'}</small>
             </div>
             {(Object.keys(modeCopy) as Array<Exclude<LabMode, 'idle'>>).map((item, index) => (
               <button
@@ -262,8 +288,12 @@ const InteractiveLab: React.FC = () => {
                 className={`lab-mode-button ${mode === item ? 'active' : ''}`}
                 onPointerEnter={() => setMode(item)}
                 onFocus={() => setMode(item)}
-                onClick={() => setMode(item)}
+                onClick={() => {
+                  setMode(item);
+                  setDetailMode(item);
+                }}
                 aria-pressed={mode === item}
+                aria-haspopup="dialog"
               >
                 <span className="mode-button-number">0{index + 1}</span>
                 <span className="mode-button-icon"><i className={`fas ${modeCopy[item].icon}`} /></span>
@@ -271,7 +301,7 @@ const InteractiveLab: React.FC = () => {
                   <strong>{modeCopy[item].shortTitle}</strong>
                   <small>{modeCopy[item].title}</small>
                 </span>
-                <i className="fas fa-arrow-right mode-arrow" />
+                <i className="fas fa-up-right-from-square mode-arrow" />
               </button>
             ))}
             <button type="button" className="lab-reset-button" onClick={() => setMode('idle')}>
@@ -281,6 +311,149 @@ const InteractiveLab: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {detailMode && createPortal(
+        <div className={`lab-detail-overlay detail-${detailMode}`} onClick={() => setDetailMode(null)}>
+          <div
+            className="lab-detail-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lab-detail-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="lab-detail-close"
+              onClick={() => setDetailMode(null)}
+              aria-label={language === 'en' ? 'Close details' : 'Detayları kapat'}
+            >
+              <i className="fas fa-times" />
+            </button>
+
+            <header className="lab-detail-header">
+              <span>0{detailMode === 'security' ? 1 : detailMode === 'ai' ? 2 : 3} / {language === 'en' ? 'DEEP DIVE' : 'DETAY GÖRÜNÜMÜ'}</span>
+              <div className="lab-detail-title-row">
+                <div className="lab-detail-icon"><i className={`fas ${modeCopy[detailMode].icon}`} /></div>
+                <div>
+                  <h3 id="lab-detail-title">{modeCopy[detailMode].shortTitle}</h3>
+                  <p>{modeCopy[detailMode].title}</p>
+                </div>
+              </div>
+            </header>
+
+            {detailMode === 'security' && (
+              <div className="lab-detail-body moda-detail-body">
+                <div className="moda-detail-visual">
+                  <div className="moda-detail-document">
+                    <i className="fas fa-file-word" />
+                    <span>sample.docm</span>
+                  </div>
+                  <div className="moda-detail-flow">
+                    <span>OOXML / OLE</span><i />
+                    <span>MACRO</span><i />
+                    <span>IOC / YARA</span><i />
+                    <strong>87<small>/100</small></strong>
+                  </div>
+                </div>
+                <div className="moda-detail-copy">
+                  <p>{modaProject.longDescription}</p>
+                  <div className="lab-detail-metrics">
+                    <div><strong>25+</strong><span>{language === 'en' ? 'Document formats' : 'Belge formatı'}</span></div>
+                    <div><strong>0–100</strong><span>{language === 'en' ? 'Risk scoring' : 'Risk puanlama'}</span></div>
+                    <div><strong>4</strong><span>{language === 'en' ? 'Report formats' : 'Rapor formatı'}</span></div>
+                  </div>
+                  <div className="lab-detail-actions">
+                    <a href={modaProject.github} target="_blank" rel="noopener noreferrer" className="lab-detail-primary">
+                      <i className="fab fa-github" /> {language === 'en' ? 'View MODA' : 'MODA\'yı İncele'}
+                    </a>
+                    <a href="#projects" onClick={() => setDetailMode(null)} className="lab-detail-secondary">
+                      {language === 'en' ? 'All projects' : 'Tüm projeler'} <i className="fas fa-arrow-down" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {detailMode === 'ai' && (
+              <div className="lab-detail-body project-detail-body">
+                <div className="lab-project-detail-intro">
+                  <p>
+                    {language === 'en'
+                      ? 'Four real products, connected by cybersecurity, artificial intelligence, and full-stack engineering.'
+                      : 'Siber güvenlik, yapay zekâ ve full-stack geliştirme ortak paydasında buluşan dört gerçek proje.'}
+                  </p>
+                  <a href="#projects" onClick={() => setDetailMode(null)}>
+                    {language === 'en' ? 'Open project section' : 'Projeler bölümünü aç'} <i className="fas fa-arrow-down" />
+                  </a>
+                </div>
+                <div className="lab-project-detail-grid">
+                  {detailProjects.map((project) => (
+                    <a
+                      className="lab-project-detail-card"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={project.name}
+                    >
+                      <div className="lab-project-detail-image">
+                        {project.image ? (
+                          <img src={`${process.env.PUBLIC_URL || ''}${project.image}`} alt={project.name} />
+                        ) : (
+                          <i className="fas fa-shield-alt" />
+                        )}
+                      </div>
+                      <div className="lab-project-detail-content">
+                        <span>{project.categories.join(' · ')}</span>
+                        <h4>{project.name}</h4>
+                        <p>{project.description}</p>
+                        <div>{project.technologies.slice(0, 3).map((tech) => <small key={tech}>{tech}</small>)}</div>
+                      </div>
+                      <i className="fas fa-arrow-up-right-from-square card-external-icon" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {detailMode === 'build' && (
+              <div className="lab-detail-body career-detail-body">
+                <div className="career-detail-line" aria-hidden="true" />
+                <article className="career-detail-item current">
+                  <div className="career-detail-marker"><i className="fas fa-building-columns" /></div>
+                  <div>
+                    <span>{language === 'en' ? 'CURRENT' : 'GÜNCEL'}</span>
+                    <h4>Information Security Intern</h4>
+                    <p>Türkiye İş Bankası</p>
+                    <small>{language === 'en' ? 'Corporate information security and defensive operations' : 'Kurumsal bilgi güvenliği ve savunma operasyonları'}</small>
+                  </div>
+                </article>
+                <article className="career-detail-item">
+                  <div className="career-detail-marker"><i className="fas fa-user-secret" /></div>
+                  <div>
+                    <span>2023 — 2024</span>
+                    <h4>Cyber Security Analyst</h4>
+                    <p>Vulnerday</p>
+                    <small>{language === 'en' ? 'Penetration testing, vulnerability analysis, and bug bounty' : 'Penetrasyon testi, zafiyet analizi ve bug bounty'}</small>
+                  </div>
+                </article>
+                <article className="career-detail-item">
+                  <div className="career-detail-marker"><i className="fas fa-graduation-cap" /></div>
+                  <div>
+                    <span>2022 — 2027</span>
+                    <h4>{language === 'en' ? 'Computer Engineering' : 'Bilgisayar Mühendisliği'}</h4>
+                    <p>{language === 'en' ? 'Ege University' : 'Ege Üniversitesi'}</p>
+                    <small>{language === 'en' ? 'Software, networks, AI, and cybersecurity foundation' : 'Yazılım, ağlar, AI ve siber güvenlik temeli'}</small>
+                  </div>
+                </article>
+                <a href="#experience" onClick={() => setDetailMode(null)} className="career-detail-link">
+                  {language === 'en' ? 'View full experience' : 'Tüm deneyimi gör'} <i className="fas fa-arrow-down" />
+                </a>
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };
