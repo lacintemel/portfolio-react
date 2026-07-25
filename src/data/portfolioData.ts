@@ -95,6 +95,16 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
 
   experiences: [
     {
+      title: "Information Security Intern",
+      company: "Türkiye İş Bankası",
+      location: "İstanbul, Türkiye",
+      period: "Güncel",
+      description: [
+        "Bilgi güvenliği ekibinde kurumsal güvenlik süreçlerine destek veriyorum",
+        "Güvenlik operasyonları, risk yönetimi ve savunma yaklaşımları üzerine deneyim kazanıyorum"
+      ]
+    },
+    {
       title: "Cyber Security Analyst",
       company: "Vulnerday",
       location: "Türkiye",
@@ -129,6 +139,15 @@ Ege Üniversitesi Bilgisayar Mühendisliği öğrencisi olarak, hızla gelişen 
   ],
 
   projects: [
+    {
+      name: "MODA",
+      description: "Zararlı Office belgeleri, RTF ve PDF dosyaları için statik analiz aracı",
+      longDescription: "MODA (Malicious Office Document Analyzer), Microsoft Office belgeleri, RTF ve PDF dosyalarını çalıştırmadan inceleyen güvenli bir statik analiz ve triyaj aracıdır. Dosya türü doğrulama, hash ve metadata çıkarımı, makro ve gömülü nesne tespiti, IOC zenginleştirme, opsiyonel YARA taraması ve 0-100 risk puanlama sunar. Sonuçlar konsol, JSON, HTML ve PDF raporlarının yanı sıra yerel web arayüzünden incelenebilir.",
+      technologies: ["Python", "YARA", "OOXML", "OLE", "Static Analysis"],
+      github: "https://github.com/lacintemel/Masterclass/tree/main/moda",
+      icon: "shield",
+      categories: ["Security"]
+    },
     {
       name: "Kazıkmı.com",
       description: "AI destekli araç fiyat analiz ve değerleme platformu",

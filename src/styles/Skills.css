@@ -20,6 +20,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  transform-style: preserve-3d;
 }
 
 .skill-category::before {
@@ -42,7 +44,12 @@
 .skill-category:hover {
   border-color: rgba(16, 185, 129, 0.25);
   box-shadow: var(--shadow-card-hover);
-  transform: translateY(-6px);
+  transform: translateZ(20px) translateY(-3px);
+}
+
+.skill-category h3,
+.skill-category .skill-items {
+  transform: translateZ(16px);
 }
 
 .skill-category h3 {
