@@ -146,6 +146,7 @@ section {
 .tilt-surface-inner {
   height: 100%;
   position: relative;
+  border-radius: var(--radius-xl);
   transform-style: preserve-3d;
   transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transition: transform 140ms ease-out;

@@ -17,8 +17,8 @@ const iconMap: Record<string, string> = {
   'shopping-cart': 'fa-shopping-cart',
   'building': 'fa-building',
   'shopping-bag': 'fa-shopping-bag',
-  'chart-bar': 'fa-chart-bar'
-  ,'shield': 'fa-shield-alt'
+  'chart-bar': 'fa-chart-bar',
+  'shield': 'fa-shield-alt'
 };
 
 // English project descriptions
@@ -31,8 +31,8 @@ const projectDescriptionsEN: Record<string, string> = {
   'Gayrimenkul Merkezim': 'Management portal for apartment residents',
   'Sobutay Ticaret': 'Corporate website',
   'Gelatte': 'Multi-language luxury e-commerce platform',
-  'Tufan Design': 'Luxury architecture portfolio website'
-  ,'MODA': 'Static analyzer for malicious Office documents, RTF files, and PDFs'
+  'Tufan Design': 'Luxury architecture portfolio website',
+  'MODA': 'Static analyzer for malicious Office documents, RTF files, and PDFs'
 };
 
 const CATEGORIES = ['All', 'Web', 'AI', 'Desktop', 'Security'];

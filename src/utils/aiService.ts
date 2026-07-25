@@ -130,8 +130,8 @@ const keywordMatches: KeywordMatch[] = [
     weight: 1.5, category: 'java'
   },
   {
-    keywords: /\bai\b|yapay\s?zeka|openai|gpt|machine\s?learning|ml|makine\s?öğrenmesi|llm|chatgpt|artificial|transformer|neural|deep\s?learning|nlp|prompt|langchain|huggingface|computer\s?vision|büyük\s?dil\s?modeli/i,
-    keywordsEN: /\bai\b|artificial\s?intelligence|openai|gpt|machine\s?learning|ml|llm|chatgpt|transformer|neural|deep\s?learning|nlp|prompt|langchain|huggingface|computer\s?vision|large\s?language/i,
+    keywords: /\bai\b|yapay\s?zeka|openai|\bgpt\b|machine\s?learning|\bml\b|makine\s?öğrenmesi|\bllm\b|chatgpt|artificial|transformer|neural|deep\s?learning|\bnlp\b|prompt|langchain|huggingface|computer\s?vision|büyük\s?dil\s?modeli/i,
+    keywordsEN: /\bai\b|artificial\s?intelligence|openai|\bgpt\b|machine\s?learning|\bml\b|\bllm\b|chatgpt|transformer|neural|deep\s?learning|\bnlp\b|prompt|langchain|huggingface|computer\s?vision|large\s?language/i,
     weight: 2.0, category: 'ai'
   },
   {
