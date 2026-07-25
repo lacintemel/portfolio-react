@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { getAIResponse, formatMessage, resetConversation } from '../utils/aiService';
 import { portfolioData } from '../data/portfolioData';
 import { useLanguage } from '../context/LanguageContext';
@@ -52,9 +52,23 @@ const Hero: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const messageIdRef = useRef(1);
+  const requestVersionRef = useRef(0);
+  const busyRef = useRef(false);
+
+  const particles = useMemo(() => (
+    Array.from({ length: 15 }, (_, index) => ({
+      left: `${(index * 37 + 11) % 100}%`,
+      animationDelay: `${((index * 17) % 50) / 10}s`,
+      animationDuration: `${10 + ((index * 13) % 15)}s`
+    }))
+  ), []);
 
   // Reset messages and conversation memory when language changes
   useEffect(() => {
+    requestVersionRef.current += 1;
+    busyRef.current = false;
+    setIsTyping(false);
     resetConversation();
     setMessages([{
       id: 1,
@@ -62,6 +76,10 @@ const Hero: React.FC = () => {
       isUser: false
     }]);
   }, [language, getWelcomeMessage]);
+
+  useEffect(() => () => {
+    requestVersionRef.current += 1;
+  }, []);
 
   // Only scroll within chat container, not the whole page
   const scrollToBottom = () => {
@@ -74,33 +92,41 @@ const Hero: React.FC = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim()) return;
+  const submitQuestion = async (question: string) => {
+    const cleanQuestion = question.trim();
+    if (!cleanQuestion || busyRef.current) return;
+
+    busyRef.current = true;
+    const requestVersion = ++requestVersionRef.current;
 
     const userMessage: Message = {
-      id: Date.now(),
-      content: inputValue,
+      id: ++messageIdRef.current,
+      content: cleanQuestion,
       isUser: true
     };
 
     setMessages(prev => [...prev, userMessage]);
-    const currentInput = inputValue;
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI thinking
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
+    if (requestVersion !== requestVersionRef.current) return;
 
-    const response = getAIResponse(currentInput, language);
+    const response = getAIResponse(cleanQuestion, language);
     
     const botMessage: Message = {
-      id: Date.now() + 1,
+      id: ++messageIdRef.current,
       content: response.text,
       isUser: false
     };
 
+    busyRef.current = false;
     setIsTyping(false);
     setMessages(prev => [...prev, botMessage]);
+  };
+
+  const handleSendMessage = () => {
+    void submitQuestion(inputValue);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -112,26 +138,7 @@ const Hero: React.FC = () => {
 
   const handleSuggestionClick = (questionTr: string, questionEn: string) => {
     const question = language === 'en' ? questionEn : questionTr;
-    const userMessage: Message = {
-      id: Date.now(),
-      content: question,
-      isUser: true
-    };
-    
-    setMessages(prev => [...prev, userMessage]);
-    setIsTyping(true);
-
-    setTimeout(async () => {
-      await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
-      const response = getAIResponse(question, language);
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        content: response.text,
-        isUser: false
-      };
-      setIsTyping(false);
-      setMessages(prev => [...prev, botMessage]);
-    }, 100);
+    void submitQuestion(question);
   };
 
   const suggestions = language === 'en' ? [
@@ -165,12 +172,8 @@ const Hero: React.FC = () => {
 
       {/* Floating particles background */}
       <div className="particles">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <div key={i} className={`particle particle-${i % 5}`} style={{
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${10 + Math.random() * 15}s`
-          }} />
+        {particles.map((particle, i) => (
+          <div key={i} className={`particle particle-${i % 5}`} style={particle} />
         ))}
       </div>
 
@@ -220,7 +223,12 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          <div className="chat-messages" ref={chatContainerRef}>
+          <div
+            className="chat-messages"
+            ref={chatContainerRef}
+            aria-live="polite"
+            aria-busy={isTyping}
+          >
             {messages.map(message => (
               <div key={message.id} className={`message ${message.isUser ? 'user' : 'bot'}`}>
                 <div 
@@ -246,11 +254,16 @@ const Hero: React.FC = () => {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyPress}
               placeholder={t('hero.inputPlaceholder')}
               autoComplete="off"
+              disabled={isTyping}
             />
-            <button onClick={handleSendMessage} aria-label={language === 'en' ? 'Send' : 'Gönder'}>
+            <button
+              onClick={handleSendMessage}
+              aria-label={language === 'en' ? 'Send' : 'Gönder'}
+              disabled={isTyping || !inputValue.trim()}
+            >
               <i className="fas fa-paper-plane"></i>
             </button>
           </div>
@@ -261,6 +274,7 @@ const Hero: React.FC = () => {
                 key={index}
                 className="suggestion-btn"
                 onClick={() => handleSuggestionClick(suggestion.questionTr, suggestion.questionEn)}
+                disabled={isTyping}
               >
                 {suggestion.text}
               </button>

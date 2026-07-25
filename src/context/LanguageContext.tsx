@@ -16,6 +16,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Navbar
     'nav.home': 'Ana Sayfa',
     'nav.about': 'Hakkımda',
+    'nav.experience': 'Deneyim',
     'nav.featured': 'Öne Çıkan',
     'nav.projects': 'Projeler',
     'nav.skills': 'Yetenekler',
@@ -45,6 +46,10 @@ const translations: Record<Language, Record<string, string>> = {
     'about.education': 'Eğitim',
     'about.certifications': 'Sertifikalar',
     'about.exchange': 'Değişim Programları',
+
+    // Experience
+    'experience.kicker': 'Kariyer Yolculuğu',
+    'experience.title': 'Deneyim',
     
     // Featured Projects
     'featured.title': 'Öne Çıkan Projeler',
@@ -91,6 +96,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Navbar
     'nav.home': 'Home',
     'nav.about': 'About',
+    'nav.experience': 'Experience',
     'nav.featured': 'Featured',
     'nav.projects': 'Projects',
     'nav.skills': 'Skills',
@@ -120,6 +126,10 @@ const translations: Record<Language, Record<string, string>> = {
     'about.education': 'Education',
     'about.certifications': 'Certifications',
     'about.exchange': 'Exchange Programs',
+
+    // Experience
+    'experience.kicker': 'Career Journey',
+    'experience.title': 'Experience',
     
     // Featured Projects
     'featured.title': 'Featured Projects',

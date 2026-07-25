@@ -39,8 +39,8 @@ function getLastCategory(): string | null {
 }
 
 // ─── Follow‑up Detection ────────────────────────────────────────────
-const followUpPatternsTR = /^(daha fazla|devam|devamı|detay|daha detaylı|anlat|anlatır mısın|peki|peki ya|ya|başka|başka ne|evet|bir de|ayrıca|özellikle|mesela|örneğin|bi de|bunun dışında|daha|daha çok|ek olarak|bunlar hakkında|hepsini|tamamını)/i;
-const followUpPatternsEN = /^(more|tell me more|continue|go on|details|elaborate|what else|and|also|specifically|for example|anything else|expand|keep going|yes|yeah|sure)/i;
+const followUpPatternsTR = /^(daha fazla|devam|devamı|detay|daha detaylı|anlat|anlatır mısın|peki|peki ya|ya|başka|başka ne|evet|bir de|ayrıca|özellikle|mesela|örneğin|bi de|bunun dışında|daha|daha çok|ek olarak|bunlar hakkında|hepsini|tamamını)[?.!\s]*$/i;
+const followUpPatternsEN = /^(more|tell me more|continue|go on|details|elaborate|what else|and|also|specifically|for example|anything else|expand|keep going|yes|yeah|sure)[?.!\s]*$/i;
 
 function isFollowUp(question: string): boolean {
   const q = question.trim();
@@ -50,9 +50,14 @@ function isFollowUp(question: string): boolean {
 // ─── Keyword Table (TR + EN patterns) ───────────────────────────────
 const keywordMatches: KeywordMatch[] = [
   {
-    keywords: /merhaba|selam|hey|hi|hello|naber|nasılsın|günaydın|iyi günler|iyi akşamlar|sa|selamlar|nbr/i,
-    keywordsEN: /hello|hey|hi|howdy|good morning|good evening|what'?s up|greetings|yo/i,
+    keywords: /(?:^|\s)(?:merhaba|selam|hey|hi|hello|naber|nasılsın|günaydın|iyi günler|iyi akşamlar|sa|selamlar|nbr)(?:\s|[?!.,]|$)/i,
+    keywordsEN: /(?:^|\s)(?:hello|hey|hi|howdy|good morning|good evening|what'?s up|greetings|yo)(?:\s|[?!.,]|$)/i,
     weight: 1.0, category: 'greeting'
+  },
+  {
+    keywords: /moda|malicious\s?office|zararlı\s?belge|doküman\s?analiz|statik\s?analiz|yara/i,
+    keywordsEN: /moda|malicious\s?office|document\s?analy|static\s?analy|yara/i,
+    weight: 3.0, category: 'moda'
   },
   {
     keywords: /la[cç]in kim|kimdir|kendini tanıt|hakkında|kim bu|sen kimsin|kimsin|tanı|özet|genel|profil/i,
@@ -80,7 +85,7 @@ const keywordMatches: KeywordMatch[] = [
     weight: 2.0, category: 'ticket'
   },
   {
-    keywords: /paymaki|ödeme|fintech|para|transfer|bordro|ik|insan kaynakları/i,
+    keywords: /paymaki|ödeme|fintech|para|transfer|bordro|\bik\b|insan kaynakları/i,
     keywordsEN: /paymaki|payment|fintech|payroll|hr|human resource/i,
     weight: 2.0, category: 'paymaki'
   },
@@ -115,8 +120,8 @@ const keywordMatches: KeywordMatch[] = [
     weight: 1.5, category: 'javascript'
   },
   {
-    keywords: /typescript|ts/i,
-    keywordsEN: /typescript|ts/i,
+    keywords: /typescript|\bts\b/i,
+    keywordsEN: /typescript|\bts\b/i,
     weight: 1.5, category: 'typescript'
   },
   {
@@ -145,8 +150,8 @@ const keywordMatches: KeywordMatch[] = [
     weight: 1.5, category: 'github'
   },
   {
-    keywords: /deneyim|tecrübe|experience|çalıştı|iş\s?hayat|iş\s?tec|kariyer|geçmiş|vulnerday|staj/i,
-    keywordsEN: /experience|career|work history|worked|job|internship|professional/i,
+    keywords: /deneyim|tecrübe|experience|çalıştı|iş\s?hayat|iş\s?tec|kariyer|geçmiş|vulnerday|staj|iş\s?bankası|information\s?security\s?intern/i,
+    keywordsEN: /experience|career|work history|worked|job|internship|professional|iş\s?bankası|information\s?security\s?intern/i,
     weight: 1.0, category: 'experience'
   },
   {
@@ -296,7 +301,8 @@ function scoreCategories(question: string, lang: 'tr' | 'en'): ScoredCategory[] 
     'kazikmi': 'kazikmi', 'kazıkmı': 'kazikmi', 'kazik': 'kazikmi',
     'interviewai': 'interviewai', 'interview': 'interviewai',
     'paymaki': 'paymaki', 'thatticket': 'ticket',
-    'msrs': 'municipality', 'gayrimenkul': 'realestate', 'gelatte': 'projects'
+    'msrs': 'municipality', 'gayrimenkul': 'realestate', 'gelatte': 'projects',
+    'moda': 'moda', 'malicious': 'moda'
   };
   
   const words = q.split(/\s+/);
@@ -312,7 +318,7 @@ function scoreCategories(question: string, lang: 'tr' | 'en'): ScoredCategory[] 
   // Contextual boost: if conversation is about projects, boost project-related matches
   const lastCat = getLastCategory();
   if (lastCat === 'projects' && scores.size > 0) {
-    const projectCategories = ['interviewai', 'municipality', 'ticket', 'paymaki', 'realestate', 'kazikmi'];
+    const projectCategories = ['moda', 'interviewai', 'municipality', 'ticket', 'paymaki', 'realestate', 'kazikmi'];
     for (const cat of projectCategories) {
       if (scores.has(cat)) {
         scores.set(cat, (scores.get(cat) || 0) + 0.5);
@@ -407,6 +413,24 @@ ${projectList}
 Herhangi bir proje hakkında daha fazla bilgi almak için proje adını sorabilirsiniz!`;
   },
 
+  moda: () => {
+    const project = portfolioData.projects.find(p => p.name === 'MODA')!;
+    return `**MODA — Malicious Office Document Analyzer** 🛡️
+
+${project.longDescription}
+
+**🔍 Öne Çıkan Yetenekler:**
+• Office, RTF ve PDF dosyalarını çalıştırmadan güvenli statik analiz
+• Makro, DDE, ActiveX, gömülü nesne ve şüpheli ilişki tespiti
+• URL, IP, hash, komut ve dosya yolu IOC çıkarımı
+• Opsiyonel YARA taraması ve 0-100 risk puanı
+• Konsol, JSON, HTML ve PDF raporları ile yerel web arayüzü
+
+💻 **Teknolojiler:** ${project.technologies.join(', ')}
+
+🔗 GitHub: ${project.github}`;
+  },
+
   interviewai: () => {
     const project = portfolioData.projects.find(p => p.name === 'InterviewAI')!;
     return `**${project.name}** 🎯
@@ -420,12 +444,12 @@ ${project.longDescription}
 
   security: () => `${portfolioData.firstName} ve Siber Güvenlik 🔐
 
-Laçin, **Cyber Security Analyst** ve **Red Teamer** olarak çalışıyor!
-
 **💼 Deneyim:**
+• Türkiye İş Bankası'nda Information Security Intern
 • Vulnerday'de Cyber Security Analyst (2023-2024)
 • Penetrasyon testleri ve zafiyet değerlendirmeleri
 • Bug Bounty programlarına katılım
+• MODA ile zararlı dokümanlar için statik analiz
 
 **🔒 Güvenlik Yetenekleri:**
 ${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
@@ -440,7 +464,7 @@ ${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
 **📜 Sertifikalar:**
 ${portfolioData.certifications.map(c => `• ${c}`).join('\n')}
 
-Siber güvenlik alanında hem offensive hem defensive tarafta aktif olarak çalışıyor! 🛡️`,
+Siber güvenlik alanında offensive ve defensive yaklaşımlar üzerine deneyimini geliştiriyor! 🛡️`,
 
   municipality: () => {
     const project = portfolioData.projects.find(p => p.name === 'MSRS - Municipal Service Request System')!;
@@ -540,13 +564,14 @@ Python, ${portfolioData.firstName}'in en güçlü olduğu dillerden biri!
 
 **Python Projeleri:**
 • **InterviewAI** - AI destekli mülakat simülasyonu
-• **YouTube AI Assistant** - Flask tabanlı Chrome eklentisi backend'i
+• **MODA** - Zararlı doküman statik analiz aracı
+• **Kazıkmı.com** - Araç fiyat analizi ve ML modelleme
 
 **Python Becerileri:**
-• Flask web framework
-• OpenAI API entegrasyonu
+• Statik analiz ve güvenlik otomasyonu
+• NLP ve makine öğrenmesi
 • REST API geliştirme
-• Veri işleme ve analiz
+• Veri işleme, raporlama ve test
 
 Python ile yapay zeka projelerinde özellikle deneyimli.`,
 
@@ -563,7 +588,8 @@ JavaScript ve React, ${portfolioData.firstName}'in frontend geliştirmede kullan
 
 **İlgili Projeler:**
 • Gayrimenkul Merkezim
-• YouTube AI Assistant (frontend)
+• PayMaki
+• Kazıkmı.com
 • Bu portfolio sitesi 😊`,
 
   typescript: () => `${portfolioData.firstName} ve TypeScript 💙
@@ -572,6 +598,8 @@ TypeScript, ${portfolioData.firstName}'in tip güvenliği gerektiren projelerde 
 
 **TypeScript Projeleri:**
 • **MSRS** - Belediye yönetim sistemi (React + Node.js)
+• **PayMaki** - İK yönetim platformu
+• **Kazıkmı.com** - AI destekli fiyat analiz arayüzü
 
 **TypeScript Avantajları:**
 • Tip güvenliği
@@ -587,9 +615,8 @@ Java, ${portfolioData.firstName}'in enterprise seviye projelerinde kullandığı
 • **ThatTicket.com** - Online bilet satış platformu
 
 **Java Becerileri:**
-• Spring Boot
-• RESTful API geliştirme
-• Enterprise uygulama geliştirme
+• Java Swing masaüstü uygulamaları
+• SQLite ve Maven
 • OOP prensipleri
 • Design Pattern kullanımı (Observer, Command, Factory)`,
 
@@ -602,7 +629,7 @@ ${portfolioData.skills.ai.map(skill => `• ${skill}`).join('\n')}
 
 **🚀 AI Projeleri:**
 • **InterviewAI** - AI destekli mülakat simülasyonu (Sentence Transformers, KeyBERT, NLP)
-• **YouTube AI Assistant** - Video içerik analizi ve özetleme
+• **Kazıkmı.com** - Makine öğrenmesi tabanlı araç fiyat analizi
 • **Portfolio AI Asistanı** - Şu an konuştuğunuz bu asistan!
 
 **💡 AI Uygulama Alanları:**
@@ -1069,6 +1096,24 @@ ${projectList}
 Ask about any project by name for more details!`;
   },
 
+  moda: () => {
+    const project = portfolioData.projects.find(p => p.name === 'MODA')!;
+    return `**MODA — Malicious Office Document Analyzer** 🛡️
+
+MODA is a safe static-analysis and triage tool for Microsoft Office documents, RTF files, and PDFs. It inspects files without executing macros or rendering their content.
+
+**🔍 Key Capabilities:**
+• Static analysis for Office, RTF, and PDF files
+• Macro, DDE, ActiveX, embedded-object, and suspicious-relationship detection
+• IOC extraction for URLs, IPs, hashes, commands, and file paths
+• Optional YARA scanning and a 0-100 risk score
+• Console, JSON, HTML, and PDF reports plus a local web UI
+
+💻 **Technologies:** ${project.technologies.join(', ')}
+
+🔗 GitHub: ${project.github}`;
+  },
+
   interviewai: () => {
     const project = portfolioData.projects.find(p => p.name === 'InterviewAI')!;
     return `**${project.name}** 🎯
@@ -1082,12 +1127,12 @@ ${project.longDescription}
 
   security: () => `${portfolioData.firstName} and Cyber Security 🔐
 
-Laçin works as a **Cyber Security Analyst** and **Red Teamer**!
-
 **💼 Experience:**
+• Information Security Intern at Türkiye İş Bankası
 • Cyber Security Analyst at Vulnerday (2023-2024)
 • Penetration testing and vulnerability assessments
 • Bug Bounty program participation
+• Static malicious-document analysis through MODA
 
 **🔒 Security Skills:**
 ${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
@@ -1102,7 +1147,7 @@ ${portfolioData.skills.security.map(skill => `• ${skill}`).join('\n')}
 **📜 Certifications:**
 ${portfolioData.certifications.map(c => `• ${c}`).join('\n')}
 
-He actively works on both offensive and defensive security! 🛡️`,
+He is building practical experience across offensive and defensive security! 🛡️`,
 
   municipality: () => {
     const project = portfolioData.projects.find(p => p.name === 'MSRS - Municipal Service Request System')!;
@@ -1202,13 +1247,14 @@ Python is one of ${portfolioData.firstName}'s strongest languages!
 
 **Python Projects:**
 • **InterviewAI** - AI-powered interview simulation
-• **YouTube AI Assistant** - Flask-based Chrome extension backend
+• **MODA** - Static malicious-document analyzer
+• **Kazıkmı.com** - Vehicle pricing and ML modeling
 
 **Python Skills:**
-• Flask web framework
-• OpenAI API integration
+• Static analysis and security automation
+• NLP and machine learning
 • REST API development
-• Data processing and analysis
+• Data processing, reporting, and testing
 
 Especially experienced with AI projects using Python.`,
 
@@ -1225,7 +1271,8 @@ JavaScript and React are ${portfolioData.firstName}'s primary frontend technolog
 
 **Related Projects:**
 • Gayrimenkul Merkezim
-• YouTube AI Assistant (frontend)
+• PayMaki
+• Kazıkmı.com
 • This portfolio site 😊`,
 
   typescript: () => `${portfolioData.firstName} and TypeScript 💙
@@ -1234,6 +1281,8 @@ TypeScript is ${portfolioData.firstName}'s go-to for projects requiring type saf
 
 **TypeScript Projects:**
 • **MSRS** - Municipal service request system (React + Node.js)
+• **PayMaki** - HR management platform
+• **Kazıkmı.com** - AI-powered pricing interface
 
 **TypeScript Advantages:**
 • Type safety
@@ -1249,9 +1298,8 @@ Java is ${portfolioData.firstName}'s choice for enterprise-level projects.
 • **ThatTicket.com** - Online ticket booking platform
 
 **Java Skills:**
-• Spring Boot
-• RESTful API development
-• Enterprise application development
+• Java Swing desktop applications
+• SQLite and Maven
 • OOP principles
 • Design Patterns (Observer, Command, Factory)`,
 
@@ -1264,7 +1312,7 @@ ${portfolioData.skills.ai.map(skill => `• ${skill}`).join('\n')}
 
 **🚀 AI Projects:**
 • **InterviewAI** - AI-powered interview simulation (Sentence Transformers, KeyBERT, NLP)
-• **YouTube AI Assistant** - Video content analysis and summarization
+• **Kazıkmı.com** - Machine-learning vehicle price analysis
 • **Portfolio AI Assistant** - The assistant you're talking to right now!
 
 **💡 AI Applications:**
@@ -1940,7 +1988,13 @@ export function getAIResponse(question: string, language: 'tr' | 'en' = 'tr'): A
   }
 
   // 2. Multi‑category scoring
-  const categories = detectCategories(q, language);
+  const scored = scoreCategories(q, language);
+  const categories = scored.length === 0
+    ? ['unknown']
+    : scored
+        .filter(item => item.score >= scored[0].score * 0.6)
+        .slice(0, 3)
+        .map(item => item.category);
   const primaryCategory = categories[0];
 
   // 3. Build response
@@ -1950,7 +2004,6 @@ export function getAIResponse(question: string, language: 'tr' | 'en' = 'tr'): A
   pushHistory(q, primaryCategory);
 
   // 5. Confidence calculation
-  const scored = scoreCategories(q, language);
   let confidence: number;
   if (primaryCategory === 'unknown') {
     confidence = 0.2;
@@ -1965,8 +2018,19 @@ export function getAIResponse(question: string, language: 'tr' | 'en' = 'tr'): A
 }
 
 export function formatMessage(text: string): string {
-  return text
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+
+  return escaped
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(
+      /(https?:\/\/[^\s<]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    )
     .replace(/\n/g, '<br>');
 }
 

@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useActiveSection } from '../hooks/useScrollReveal';
 import '../styles/Navbar.css';
 
-const sectionIds = ['home', 'about', 'featured', 'projects', 'skills', 'contact'];
+const sectionIds = ['home', 'about', 'experience', 'featured', 'projects', 'skills', 'contact'];
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
                 onClick={closeMenu}
                 className={activeSection === id ? 'active' : ''}
               >
-                {t(`nav.${id === 'featured' ? 'featured' : id}`)}
+                {t(`nav.${id}`)}
               </a>
             </li>
           ))}
